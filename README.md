@@ -1,25 +1,16 @@
 <div align="center">
 
 # VoirAnime DarkMod
-
----
-
-**Thème sombre, AdBlock et bien plus pour tout le site <https://voiranime.com/>.**
+**Thème sombre, AdBlock et bien plus pour tout le site [VoirAnime](https://voiranime.com/).**
 
 ![Version](https://img.shields.io/badge/version-1.1.5-blue)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)
 ![Licence](https://img.shields.io/badge/licence-GPLv3-orange)
 
+![Image Promotionnelle](img/ImagePromotionnelle.png)
 </div>
 
-<p align="center">
-  <img src="img/ImagePromotionnelle.png" alt="Aperçu de VoirAnime DarkMod">
-</p>
-
-**VoirAnime DarkMod** applique un thème sombre homogène et nettoie l’interface du site <https://voiranime.com/> afin d’offrir une expérience de visionnage plus confortable.  
-Version courante : **v1.1.5** (21 décembre 2024).
-
----
+**VoirAnime DarkMod** applique un thème sombre homogène et nettoie l’interface du site [VoirAnime](https://voiranime.com/) afin d’offrir une expérience de visionnage plus confortable.
 
 ## Fonctionnalités
 - **Thème sombre** appliqué à l’ensemble du site.
@@ -50,6 +41,8 @@ Vous pouvez l’utiliser, le modifier et le redistribuer sous réserve de respec
 
 Pour plus d’informations, consultez le texte complet ici : [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html).
 
----
+## Remerciements
+- **[VoirAnime](https://voiranime.com/)** pour son contenu.
+- **[Oriloo](https://github.com/Oriloo)** pour le développement de l’extension.
 
 © 2023-2025 **[Oriloo](https://github.com/Oriloo)** — Projet non affilié à VoirAnime.
