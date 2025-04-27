@@ -1,0 +1,15 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css";
+@import "variables.css";
+
+/* import components */
+@import "general.css";
+@import "header.css";
+@import "content.css";
+@import "footer.css";
+@import "pagination.css";
+
+/* import page */
+@import "home.css";
+@import "anime.css";
+@import "episode.css";

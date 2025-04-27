@@ -1,0 +1,120 @@
+.home .site-content .main-col-inner {
+    .tab-wrap .c-blog__heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 0;
+
+        h1 { font-size: var(--font-size-xxl); }
+        .c-nav-tabs ul {
+            display: flex;
+            gap: 5px;
+
+            li { padding: 3px 10px; }
+            li.active {
+                background-color: var(--color-zone);
+                border-radius: 30px;
+            }
+        }
+    }
+
+    .page-content-listing {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(338px, 1fr));
+
+        .page-listing-item .row {
+            display: flex;
+            justify-content: space-around;
+
+            .page-item-detail {
+                width: 150px;
+                padding-bottom: 50px;
+
+                .item-thumb {
+                    width: 150px;
+                    height: 225px;
+                    position: relative;
+                    overflow: hidden;
+
+                    a {
+                        &:hover { color: var(--color-primary) }
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            transition: scale 0.3s ease;
+                            &:hover { scale: 1.1; }
+                        }
+                        .manga-vf-flag {
+                            position: absolute;
+                            bottom: 0; left: 0;
+                            width: 100%;
+                            height: 30px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: var(--font-size-lg);
+                            z-index: 0;
+
+                            &::before {
+                                content: '';
+                                position: absolute;
+                                top: 0; left: 0;
+                                width: 100%; height: 100%;
+                                background: var(--color-brand-red);
+                                opacity: 0.85;
+                                z-index: -1;
+                            }
+                        }
+                    }
+                }
+                .item-summary {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+                    padding: 2px 0;
+
+                    h2 {
+                        font-size: var(--font-size-lg);
+                        a:hover { color: var(--color-brand) }
+                    }
+                }
+                .post-title h3 {
+                    margin-top: 5px;
+                    line-height: 18px;
+                    a {
+                        font-size: var(--font-size-sm);
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 2;
+                        overflow: hidden;
+                    }
+                }
+                .rating .post-total-rating {
+                    display: flex;
+                    align-items: center;
+                    gap: 2px;
+                    line-height: 18px;
+                    color: var(--color-secondary);
+
+                    .ratings_stars {
+                        color: var(--color-brand);
+                        font-size: var(--font-size-lg);
+                    }
+                    .score { margin-left: 5px; }
+                }
+                .list-chapter .chapter-item {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden;
+                    color: var(--color-secondary);
+                    font-size: var(--font-size-xs);
+                    .chapter a { padding: 5px 10px 5px 0; }
+                    .post-on {}
+                }
+            }
+        }
+    }
+}

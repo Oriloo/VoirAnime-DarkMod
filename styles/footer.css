@@ -1,0 +1,37 @@
+footer.site-footer {
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+    padding: 10px 0;
+
+    .top-footer {
+        padding: 10px 0;
+
+        .social_account__item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 0 10px;
+            font-size: var(--font-size-xl);
+            color: var(--color-primary);
+            transition: all 0.3s ease;
+            &:hover { color: var(--color-brand); }
+
+            .social-icons {
+                height: 30px;
+                width: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+    .bottom-footer {
+        .nav-footer {}
+        .copyright {
+            padding: 10px 0;
+            font-size: var(--font-size-sm);
+            color: var(--color-secondary);
+        }
+    }
+}
