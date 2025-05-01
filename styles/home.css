@@ -7,6 +7,11 @@
         gap: var(--spacing-lg);
         padding: var(--spacing-lg) 0;
 
+        @media (max-width: 576px) {
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
         h1 { font-size: var(--font-size-xxl); }
         .c-nav-tabs ul {
             display: flex;
@@ -127,6 +132,22 @@
                                  0;
                     }
                     .post-on {}
+                }
+            }
+
+            &:not(:has(> .badge-pos-1:nth-child(2))) {
+                &:after {
+                    content: '';
+                    display: block;
+                    width: 150px;
+                }
+            }
+            
+            @media (max-width: 576px) {
+                &:not(:has(> .badge-pos-1:nth-child(2))) {
+                    &:after {
+                        display: none;
+                    }
                 }
             }
         }

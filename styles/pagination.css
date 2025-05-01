@@ -4,7 +4,7 @@
     align-items: center;
     gap: var(--spacing-xs);
     margin: var(--spacing-lg) 0;
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
 
     .pages,
     .current,
@@ -28,5 +28,19 @@
         border-radius: var(--spacing-xxs);
         border: var(--border-sm);
         background-color: var(--color-zone-click);
+    }
+
+    @media (max-width: 992px) { grid-template-columns: repeat(15, 1fr); }
+    @media (max-width: 768px) { grid-template-columns: repeat(8, 1fr); }
+    @media (max-width: 992px), (max-width: 768px) {
+        padding: 0 var(--spacing-xs);
+        font-size: var(--font-size-md);
+        display: grid;
+        text-align: center;
+
+        .first,
+        .last { grid-column: span 2; }
+        .pages { grid-column: span 3; }
+        .extend { display: none; }
     }
 }
