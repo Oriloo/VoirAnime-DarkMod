@@ -1,0 +1,41 @@
+.error404 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--color-bg);
+
+    .error-404_content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .c-thumbnail {
+            img { display: none; }
+            &::after {
+                content: url('../img/error-404-512.webp');
+                display: block;
+
+                @media (max-width: 576px) {
+                    content: url("../img/error-404-256.webp");
+                }
+            }
+        }
+
+        .heading {
+            margin: var(--spacing-lg) 0;
+        }
+
+        .c-btn {
+            font-size: var(--font-size-lg);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: var(--border-sm);
+            border-radius: var(--border-radius-md);
+            background-color: var(--color-zone);
+            &:hover { background-color: var(--color-zone-click); }
+            &:after { content: ' ≫' }
+        }
+    }
+}
