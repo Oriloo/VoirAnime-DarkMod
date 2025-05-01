@@ -7,9 +7,10 @@
 }
 
 html, body {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-family-base);
+    font-weight: var(--font-weight-regular);
     font-size: var(--font-size-md);
-    line-height: 1.5;
+    line-height: var(--line-height-md);
     color: var(--color-primary);
     background-color: var(--color-bg);
 
@@ -29,7 +30,7 @@ svg {
 a {
     color: var(--color-primary);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
     &:hover { color: var(--color-brand); }
 }
 
@@ -37,6 +38,7 @@ a {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
     .site-header {}
     .site-content { flex: 1; }
     .site-footer {}
