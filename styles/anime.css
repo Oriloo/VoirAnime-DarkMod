@@ -1,13 +1,16 @@
 .wp-manga-template-default .site-content {
     .profile-manga .container {
         background-color: var(--color-black);
-        padding: 20px 36px 0 36px;
+        padding: var(--spacing-lg)
+                 var(--spacing-xl)
+                 0
+                 var(--spacing-xl);
         position: relative;
 
         .c-breadcrumb-wrapper { display: none; }
         .post-title {
-            padding-bottom: 20px;
-            max-width: var(--width-primary);
+            padding-bottom: var(--spacing-lg);
+            max-width: var(--breakpoint-xl);
 
             h1 {
                 font-size: var(--font-size-xxxl);
@@ -17,10 +20,11 @@
                 overflow: hidden;
             }
         }
+
         .tab-summary {
             .summary_image {
                 position: relative;
-                padding-bottom: 20px;
+                padding-bottom: var(--spacing-lg);
 
                 a {
                     display: flex;
@@ -29,29 +33,33 @@
                 }
                 &:not(:has(#trailer)) a::before {
                     content: 'Aucun trailer n\'a été trouvé pour cet anime.';
-                    width: calc(100% - 4px);
+                    width: calc(100% - var(--spacing-xxs));
                     height: 300px;
-                    margin-left: 4px;
+                    margin-left: var(--spacing-xxs);
                     background: var(--color-zone);
                     display: flex;
                     justify-content: center;
                     align-items: center;
                 }
+
                 .play-trailer-btn { display: none; }
                 #trailer {
                     flex: 1;
+
                     .modal-body { height: 300px; }
                     iframe {
-                        width: calc(100% - 4px);
+                        width: calc(100% - var(--spacing-xxs));
                         height: 300px;
-                        margin-left: 4px;
+                        margin-left: var(--spacing-xxs);
                     }
                 }
+
                 img {
-                    width: 200px;
-                    height: calc(200px * 1.5);
+                    width: calc(300px * var(--aspect-ratio-poster));
+                    height: 300px;
                     object-fit: cover;
                 }
+
                 .manga-vf-flag {
                     position: absolute;
                     top: 270px; left: 0;
@@ -61,8 +69,7 @@
                     justify-content: center;
                     align-items: center;
                     font-size: var(--font-size-lg);
-                    z-index: 0;
-
+                    z-index: var(--z-index-base);
                     &::before {
                         content: '';
                         position: absolute;
@@ -70,10 +77,11 @@
                         width: 100%; height: 100%;
                         background: var(--color-brand-red);
                         opacity: 0.85;
-                        z-index: -1;
+                        z-index: var(--z-index-negative);
                     }
                 }
             }
+
             .summary_content {
                 position: relative;
                 .post-content {
@@ -82,35 +90,38 @@
                     .loader-inner {}
                     .post-rating {
                         position: absolute;
-                        top: -20px; right: 0;
-                        width: 505px;
+                        top: -24.5px; right: 0;
+                        width: 520px;
                         background-color: var(--color-bg);
-                        padding: 10px 10px 10px 20px;
-                        border-radius: 0 0 0 20px;
+                        padding: var(--spacing-sm);
+                        padding-left: var(--spacing-lg);
+                        border-radius: 0 0 0 var(--border-radius-lg);
+                        &:hover {
+                            .post-total-rating { display: none; }
+                            .user-rating { display: flex; }
+                        }
 
                         .post-total-rating,
                         .user-rating {
                             display: flex;
                             align-items: center;
-                            gap: 2px;
-                            line-height: 18px;
+                            gap: var(--spacing-xxs);
+                            line-height: var(--line-height-sm);
 
                             .ratings_stars {
                                 color: var(--color-brand);
                                 font-size: var(--font-size-xxxl);
                             }
+
                             .score {
                                 margin-left: calc((255px - 67px) / 2);
                                 font-size: var(--font-size-xxxl);
                             }
                         }
+
                         .user-rating {
                             display: none;
-                            .score { margin-left: 5px; }
-                        }
-                        &:hover {
-                            .post-total-rating { display: none; }
-                            .user-rating { display: flex; }
+                            .score { margin-left: var(--spacing-xxs); }
                         }
                     }
 
@@ -125,30 +136,34 @@
                             h5 {
                                 font-size: var(--font-size-lg);
                                 color: var(--color-secondary);
-                                margin-bottom: 10px;
+                                margin-bottom: var(--spacing-sm);
                             }
                         }
-                        .summary-content {}
+
+                        .summary-content { max-width: calc(100% - 650px); }
                     }
                 }
+
                 .nav-links {
                     position: absolute;
-                    top: 50px; right: 0;
-                    padding: 10px 0;
+                    top: 60px; right: 0;
+                    padding: var(--spacing-sm) 0;
 
                     .c-btn {
-                        padding: 5px 10px;
-                        border-radius: 5px;
-                        border: 1px solid var(--color-border);
-                        background-color: var(--color-click-zone);
+                        padding: var(--spacing-xxs) var(--spacing-sm);
+                        border-radius: var(--border-radius-sm);
+                        border: var(--border-sm);
+                        background-color: var(--color-zone-click);
                         font-size: var(--font-size-lg);
                     }
+
                     #btn-read-last:before { content: '« '; }
                     #btn-read-first:after { content: ' »'; }
                 }
             }
         }
     }
+
     .main-col-inner {
         .c-blog__heading {
             position: relative;
@@ -156,12 +171,13 @@
             h2 {
                 font-size: var(--font-size-xxl);
                 text-align: center;
-                padding-bottom: 10px;
-                margin-bottom: 20px;
-                border-bottom: 1px solid var(--color-border);
+                padding-bottom: var(--spacing-sm);
+                margin-bottom: var(--spacing-lg);
+                border-bottom: var(--border-sm);
                 text-transform: uppercase;
                 .icon { display: none; }
             }
+
             .btn-reverse-order {
                 position: absolute;
                 top: 0; right: 0;
@@ -175,35 +191,34 @@
                     content: '⇅';
                     font-size: var(--font-size-xxl);
                     font-style: normal;
-                    font-weight: bold;
+                    font-weight: var(--font-weight-bold);
                 }
             }
         }
 
-        .description-summary {
-            margin-bottom: 50px;
-        }
+        .description-summary { margin-bottom: var(--spacing-xxl); }
         .listing-chapters_wrap {
-            margin-bottom: 50px;
+            margin-bottom: var(--spacing-xxl);
 
             .wp-manga-chapter {
                 position: relative;
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                border-radius: 5px;
-                &:hover { background-color: var(--color-click-zone); }
+                border-radius: var(--border-radius-sm);
+                &:hover { background-color: var(--color-zone-click); }
 
                 a {
                     flex: 1;
-                    padding: 5px 10px;
+                    padding: var(--spacing-xxs) var(--spacing-sm);
                     &:visited { color: var(--color-tertiary); }
                 }
+
                 .chapter-release-date i {
                     position: absolute;
                     top: 50%; right: 0;
                     transform: translateY(-50%);
-                    padding-right: 10px;
+                    padding-right: var(--spacing-sm);
                     pointer-events: none;
                     color: var(--color-secondary);
                 }
