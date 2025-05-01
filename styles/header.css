@@ -125,7 +125,7 @@ header.site-header {
                 .row .col-md-12 .main-navigation_wrap {
                     display: flex;
                     height: 56px;
-                    padding: var(--spacing-xs) var(--spacing-xl);
+                    padding: var(--spacing-xl);
 
                     @media (max-width: 992px) {
                         justify-content: space-between;
@@ -194,11 +194,11 @@ header.site-header {
     .mobile-menu {
         display: none;
         position: absolute;
-        top: 109px;
+        top: 64px;
         left: 0;
         z-index: var(--z-index-modal);
         width: 300px;
-        height: calc(100vh - 109px);
+        height: calc(100vh - 64px);
         background-color: var(--color-bg);
         border-top: var(--border-sm);
         border-right: var(--border-sm);
@@ -211,8 +211,6 @@ header.site-header {
         }
 
         @media (max-width: 576px) {
-            top: 137px;
-            height: calc(100vh - 137px);
             width: 100vw;
             border-right: none;
         }
