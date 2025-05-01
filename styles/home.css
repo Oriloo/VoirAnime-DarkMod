@@ -134,6 +134,22 @@
                     .post-on {}
                 }
             }
+
+            &:not(:has(> .badge-pos-1:nth-child(2))) {
+                &:after {
+                    content: '';
+                    display: block;
+                    width: 150px;
+                }
+            }
+            
+            @media (max-width: 576px) {
+                &:not(:has(> .badge-pos-1:nth-child(2))) {
+                    &:after {
+                        display: none;
+                    }
+                }
+            }
         }
     }
 
