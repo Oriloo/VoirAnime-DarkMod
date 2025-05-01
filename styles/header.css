@@ -213,6 +213,8 @@ header.site-header {
         @media (max-width: 576px) {
             width: 100vw;
             border-right: none;
+
+            .close-nav { display: none; }
         }
 
         .close-nav .menu_icon__close {
@@ -242,6 +244,14 @@ header.site-header {
             display: flex;
             flex-direction: column;
             gap: var(--spacing-sm);
+
+            .main-menu-item {
+                padding: var(--spacing-sm) var(--spacing-lg);
+                border-bottom: var(--border-sm);
+                cursor: pointer;
+                transition: var(--transition-fast);
+                &:hover { background-color: var(--color-zone-hover); }
+            }
         }
     }
 
