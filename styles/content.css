@@ -11,7 +11,8 @@
         display: flex;
         justify-content: center;
         .main-col .main-col-inner {
-            width: var(--breakpoint-xl);
+            width: 100vw;
+            max-width: var(--breakpoint-xxl);
         }
     }
     .sidebar-col { display: none }
