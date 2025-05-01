@@ -246,11 +246,16 @@ header.site-header {
             gap: var(--spacing-sm);
 
             .main-menu-item {
-                padding: var(--spacing-sm) var(--spacing-lg);
-                border-bottom: var(--border-sm);
-                cursor: pointer;
-                transition: var(--transition-fast);
-                &:hover { background-color: var(--color-zone-hover); }
+                display: flex;
+
+                .menu-link {
+                    flex: 1;
+                    padding: var(--spacing-sm) var(--spacing-lg);
+                    border-bottom: var(--border-sm);
+                    cursor: pointer;
+                    transition: var(--transition-fast);
+                    &:hover { background-color: var(--color-zone-hover); }
+                }
             }
         }
     }
