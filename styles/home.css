@@ -131,4 +131,24 @@
             }
         }
     }
+
+    .no-results .page-content {
+        text-align: center;
+
+        .page-title { display: none; }
+        .search-form { display: none; }
+        p {
+            font-size: var(--font-size-lg);
+            margin-top: var(--spacing-lg);
+            color: transparent;
+            &::before {
+                content: url("../img/not-found-512.webp");
+                display: block;
+
+                @media (max-width: 576px) {
+                    content: url("../img/not-found-256.webp");
+                }
+            }
+        }
+    }
 }
