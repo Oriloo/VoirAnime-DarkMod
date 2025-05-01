@@ -2,35 +2,37 @@
     .main-col-inner {
         .wp-manga-nav {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: var(--spacing-lg);
 
             .entry-header_wrap {
                 .breadcrumb {
-                    padding-bottom: 20px;
+                    padding-bottom: var(--spacing-lg);
 
                     li:nth-child(1),
                     li:nth-child(3) { display: none; }
                     li:nth-child(2) a {
                         font-size: var(--font-size-xxxl);
-                        font-weight: bold;
+                        font-weight: var(--font-weight-bold);
                     }
                 }
             }
+
             .select-view {
                 display: flex;
                 justify-content: start;
                 align-items: center;
-                .video-light { display: none; }
 
+                .video-light { display: none; }
                 .selectpicker {
-                    margin-right: 10px;
-                    padding: 5px 10px;
-                    border-radius: 5px;
-                    border: 1px solid var(--color-border);
-                    background-color: var(--color-click-zone);
+                    margin-right: var(--spacing-sm);
+                    padding: var(--spacing-xxs) var(--spacing-sm);
+                    border-radius: var(--border-radius-sm);
+                    border: var(--border-sm);
+                    background-color: var(--color-zone-click);
                     font-size: var(--font-size-md);
                 }
             }
+
             .select-pagination {
                 position: absolute;
                 bottom: 0; right: 0;
@@ -39,31 +41,32 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    gap: 10px;
+                    gap: var(--spacing-sm);
 
                     .btn {
-                        padding: 5px 10px;
-                        border-radius: 5px;
-                        border: 1px solid var(--color-border);
-                        background-color: var(--color-click-zone);
+                        padding: var(--spacing-xxs) var(--spacing-sm);
+                        border-radius: var(--spacing-xxs);
+                        border: var(--border-sm);
+                        background-color: var(--color-zone-click);
                         &.prev_page:before { content: '« '; }
                         &.next_page:after { content: ' »'; }
                     }
                 }
             }
         }
+
         .entry-content {
             width: 100%;
             height: calc(100vh - 375px);
             max-height: 636px;
-            outline: 1px solid var(--color-border);
+            outline: var(--border-sm);
             display: flex;
             justify-content: center;
             align-items: center;
 
             #chapter-video-frame {
                 p:nth-child(1), iframe {
-                    width: calc(var(--width-primary) - 72px);
+                    width: calc(var(--breakpoint-xl) - 72px);
                     height: calc(100vh - 375px);
                     max-height: 636px;
                 }
@@ -78,17 +81,19 @@
                         width: auto;
                         height: auto;
                     }
+
                     .btn {
                         width: 304px;
                         height: 50px;
-                        border-radius: 5px;
-                        border: 1px solid var(--color-border);
-                        background-color: var(--color-click-zone);
+                        border-radius: var(--border-radius-sm);
+                        border: var(--border-sm);
+                        background-color: var(--color-zone-click);
                         font-size: var(--font-size-lg);
-                        font-weight: bold;
+                        font-weight: var(--font-weight-bold);
                         color: var(--color-primary);
-                        margin: 20px 0;
+                        margin: var(--spacing-lg) 0;
                     }
+
                     div p {
                         width: 350px;
                         font-size: var(--font-size-lg);
@@ -97,6 +102,7 @@
                 }
             }
         }
+
         #manga-reading-nav-foot { display: none; }
     }
 }

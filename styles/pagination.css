@@ -2,29 +2,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    margin: 20px 0;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-lg) 0;
     font-size: var(--font-size-xl);
 
     .pages,
     .current,
     .page {
-        padding:4px 8px;
-        border-radius: 5px;
-        border: 1px solid var(--color-border);
+        padding: var(--spacing-xxs) var(--spacing-xs);
+        border-radius: var(--spacing-xxs);
+        border: var(--border-sm);
     }
+
     .current {
         background-color: var(--color-brand);
         border-color: var(--color-brand);
     }
-    .extend { padding: 5px 2px; }
+
+    .extend { padding: var(--spacing-xxs); }
     .first,
     .previouspostslink,
     .nextpostslink,
     .last {
-        padding: 5px 10px;
-        border-radius: 5px;
-        border: 1px solid var(--color-border);
-        background-color: var(--color-click-zone);
+        padding: var(--spacing-xxs) var(--spacing-sm);
+        border-radius: var(--spacing-xxs);
+        border: var(--border-sm);
+        background-color: var(--color-zone-click);
     }
 }

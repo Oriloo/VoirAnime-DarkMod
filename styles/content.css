@@ -4,14 +4,14 @@
     .main-col .main-col-inner {
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        padding: 20px 36px;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg) var(--spacing-xl);
     }
     @media (min-width: 1200px) {
         display: flex;
         justify-content: center;
         .main-col .main-col-inner {
-            width: var(--width-primary);
+            width: var(--breakpoint-xl);
         }
     }
     .sidebar-col { display: none }
