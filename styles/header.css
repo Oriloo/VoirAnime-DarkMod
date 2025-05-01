@@ -12,17 +12,17 @@ header.site-header {
             display: flex;
             justify-content: center;
             align-items: center;
-            border-bottom: 1px solid var(--color-border);
+            background-color: var(--color-black);
 
             li {
-                max-width: var(--breakpoint-xl);
+                max-width: var(--breakpoint-xxl);
                 margin: 0 auto;
                 width: 100%;
 
                 .container {
                     display: flex;
                     align-items: center;
-                    height: 52px;
+                    height: 64px;
                     padding: var(--spacing-xs) var(--spacing-xl);
 
                     @media (max-width: 576px) {
@@ -49,20 +49,18 @@ header.site-header {
                                 position: relative;
 
                                 input {
-                                    padding: var(--spacing-xxs)
+                                    width: 100%;
+                                    height: 100%;
+                                    font-size: var(--font-size-lg);
+                                    padding: var(--spacing-xs)
                                              var(--spacing-xxxl)
-                                             var(--spacing-xxs)
+                                             var(--spacing-xs)
                                              var(--spacing-md);
                                     border: none;
-                                    border-radius: var(--border-radius-lg);
-
-                                    &.orig {
-                                        width: 100%;
-                                        height: 100%;
-                                        background-color: var(--color-zone-click);
-                                        outline: 1px solid var(--color-border);
-                                        &:focus { outline-color: var(--color-brand) }
-                                    }
+                                    border-radius: var(--border-radius-xl);
+                                    background-color: var(--color-zone-click-dark);
+                                    outline: var(--border-sm);
+                                    &:focus { outline-color: var(--color-brand) }
 
                                     &.autocomplete {
                                         position: absolute;
@@ -78,9 +76,9 @@ header.site-header {
 
                             .promagnifier {
                                 position: absolute;
-                                top: calc(26px / 2);
+                                top: calc(38px / 2);
                                 right: 0;
-                                height: 20px;
+                                height: 25px;
                                 transform: translate(0, -50%);
                                 padding-right: var(--spacing-sm);
                                 background: none;
@@ -95,9 +93,9 @@ header.site-header {
                             .proclose {
                                 display: none;
                                 position: absolute;
-                                top: calc(26px / 2);
-                                right: 30px;
-                                height: 20px;
+                                top: calc(38px / 2);
+                                right: 35px;
+                                height: 25px;
                                 transform: translate(0, -50%);
                                 padding-right: var(--spacing-xxs);
                                 svg {}
@@ -120,14 +118,14 @@ header.site-header {
             border-bottom: var(--border-sm);
 
             .container {
-                max-width: var(--breakpoint-xl);
+                max-width: var(--breakpoint-xxl);
                 margin: 0 auto;
                 width: 100%;
 
                 .row .col-md-12 .main-navigation_wrap {
                     display: flex;
                     height: 56px;
-                    padding: var(--spacing-xs) var(--spacing-xl);
+                    padding: var(--spacing-xl);
 
                     @media (max-width: 992px) {
                         justify-content: space-between;
@@ -196,11 +194,11 @@ header.site-header {
     .mobile-menu {
         display: none;
         position: absolute;
-        top: 109px;
+        top: 64px;
         left: 0;
         z-index: var(--z-index-modal);
         width: 300px;
-        height: calc(100vh - 109px);
+        height: calc(100vh - 64px);
         background-color: var(--color-bg);
         border-top: var(--border-sm);
         border-right: var(--border-sm);
@@ -213,10 +211,10 @@ header.site-header {
         }
 
         @media (max-width: 576px) {
-            top: 137px;
-            height: calc(100vh - 137px);
             width: 100vw;
             border-right: none;
+
+            .close-nav { display: none; }
         }
 
         .close-nav .menu_icon__close {
@@ -246,6 +244,14 @@ header.site-header {
             display: flex;
             flex-direction: column;
             gap: var(--spacing-sm);
+
+            .main-menu-item {
+                padding: var(--spacing-sm) var(--spacing-lg);
+                border-bottom: var(--border-sm);
+                cursor: pointer;
+                transition: var(--transition-fast);
+                &:hover { background-color: var(--color-zone-hover); }
+            }
         }
     }
 
