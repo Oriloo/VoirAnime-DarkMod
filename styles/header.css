@@ -28,7 +28,7 @@ header.site-header {
                     @media (max-width: 576px) {
                         flex-direction: column;
                         gap: var(--spacing-xs);
-                        height: 80px;
+                        height: calc(77px + (3 * var(--spacing-xs)));
 
                         .asp_w_container {
                             width: 100%;
