@@ -18,6 +18,10 @@
                 -webkit-box-orient: vertical;
                 -webkit-line-clamp: 2;
                 overflow: hidden;
+
+                @media (max-width: 576px) {
+                    font-size: var(--font-size-xxl);
+                }
             }
         }
 
@@ -82,8 +86,38 @@
                 }
             }
 
+            @media (max-width: 576px) {
+                .summary_image {
+                    a { flex-direction: column-reverse; }
+                    &:not(:has(#trailer)) a::before { display: none; }
+
+                    #trailer {
+                        .modal-body,
+                        iframe {
+                            width: 100%;
+                            height: auto;
+                            aspect-ratio: var(--aspect-ratio-screen);
+                        }
+                    }
+
+                    img {
+                        width: calc(100vw - (2 * var(--spacing-xl)));
+                        height: calc((100vw - (2 * var(--spacing-xl))) / (var(--aspect-ratio-poster)));
+                        margin-bottom: var(--spacing-md);
+                    }
+
+                    .manga-vf-flag {
+                        top: calc((100vw - (2 * var(--spacing-xl))) / (var(--aspect-ratio-poster)) - 50px);
+                        width: calc(100vw - (2 * var(--spacing-xl)));
+                        height: 50px;
+                        font-size: var(--font-size-xxl);
+                    }
+                }
+            }
+
             .summary_content {
                 position: relative;
+
                 .post-content {
                     position: relative;
 
@@ -160,6 +194,61 @@
                     #btn-read-last:before { content: '« '; }
                     #btn-read-first:after { content: ' »'; }
                 }
+
+                @media (max-width: 1200px) {
+                    .post-content {
+                        .post-rating {
+                            position: static;
+                            top: 0;
+                            right: 0;
+                            width: 100%;
+                            border-radius: var(--border-radius-lg);
+                            margin-bottom: var(--spacing-lg);
+
+                            .post-total-rating,
+                            .user-rating {
+                                .score {
+                                    margin-left: var(--spacing-xxs);
+                                }
+                            }
+                        }
+
+                        .post-content_item .summary-content {
+                            max-width: 100%;
+                        }
+                    }
+
+                    .nav-links {
+                        position: static;
+                        top: 0; right: 0;
+                        padding: var(--spacing-sm) 0;
+                        margin-bottom: var(--spacing-lg);
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        gap: var(--spacing-sm);
+                    }
+                }
+                
+                @media (max-width: 576px) {
+                    .post-content {
+                        .post-rating {
+                            padding: var(--font-size-sm);
+
+                            .user-rating {
+                                .score {
+                                    font-size: var(--font-size-xl);
+                                }
+                            }
+                        }
+                    }
+
+                    .nav-links {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        text-align: center;
+                    }
+                }
             }
         }
     }
@@ -221,6 +310,17 @@
                     padding-right: var(--spacing-sm);
                     pointer-events: none;
                     color: var(--color-secondary);
+                }
+            }
+        }
+
+        @media (max-width: 576px) {
+            padding: 0 var(--spacing-xl);
+
+            .listing-chapters_wrap {
+                .wp-manga-chapter {
+                    margin-bottom: var(--spacing-sm);
+                    i { display: none; }
                 }
             }
         }
