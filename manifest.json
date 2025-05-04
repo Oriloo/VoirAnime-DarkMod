@@ -18,7 +18,10 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["styles/all.css"],
+      "resources": [
+        "styles/all.css",
+        "styles/liste.css"
+      ],
       "matches": ["*://*.voiranime.com/*"]
     }
   ],
