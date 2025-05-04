@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "DarkMod - VoirAnime : streaming animes",
+  "name": "VoirAnime - DarkMod : streaming animes",
   "description": "Thème sombre et plus encore, pour l'ensemble du site \"voiranime.com\" (VA).",
   "version": "3.0.0",
   "author": "Orilo",
@@ -31,5 +31,11 @@
   ],
   "content_security_policy": {
     "extension_pages": "default-src 'self'; style-src 'self';"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "voiranime-darkmod@orilo",
+      "strict_min_version": "109.0"
+    }
   }
 }
