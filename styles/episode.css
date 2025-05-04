@@ -14,6 +14,11 @@
                         font-size: var(--font-size-xxxl);
                         font-weight: var(--font-weight-bold);
                     }
+
+                    @media (max-width: 576px) {
+                        padding-top: var(--spacing-lg);
+                        li:nth-child(2) a { font-size: var(--font-size-xxl); }
+                    }
                 }
             }
 
@@ -53,6 +58,38 @@
                     }
                 }
             }
+
+            @media (max-width: 576px) {
+                display: flex;
+                flex-direction: column;
+
+                .select-view {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: var(--spacing-sm);
+
+                    .selectpicker {
+                        margin: 0;
+                        width: 100%;
+                    }
+                }
+
+                .select-pagination {
+                    position: static;
+                    margin-top: var(--spacing-sm);
+
+                    .nav-links {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+
+                        .btn {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
         }
 
         .entry-content {
@@ -67,6 +104,7 @@
             #chapter-video-frame {
                 p:nth-child(1), iframe {
                     width: calc(var(--breakpoint-xl) - 72px);
+                    max-width: calc(100vw - var(--spacing-xl) * 2);
                     height: calc(100vh - 375px);
                     max-height: 636px;
                 }
@@ -98,6 +136,11 @@
                         width: 350px;
                         font-size: var(--font-size-lg);
                         text-align: center;
+
+                        @media (max-width: 576px) {
+                            width: 100%;
+                            padding: 0 var(--spacing-sm);
+                        }
                     }
                 }
             }
