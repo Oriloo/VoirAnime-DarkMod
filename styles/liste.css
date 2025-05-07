@@ -1,0 +1,88 @@
+.c-blog__content {
+
+    @media (max-width: 768px) {
+        padding: 0 var(--spacing-md);
+    }
+
+    #manga-filte-alphabeta-bar {
+        display: grid;
+        grid-template-columns: repeat(28, 1fr);
+        margin-bottom: var(--spacing-xxl);
+        text-align: center;
+        padding: 0 var(--spacing-md);
+        border-radius: var(--border-radius-lg);
+        background-color: var(--color-bg);
+
+        a {
+            padding: var(--spacing-xxs) 0;
+            &:hover { background-color: var(--color-zone-hover); }
+            &.active { background-color: var(--color-zone-hover); }
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(7, 1fr);
+        }
+    }
+
+    #loop-content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xxl);
+        margin-bottom: var(--spacing-xxl);
+
+        .page-listing-item .row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: var(--spacing-xxl);
+
+            .page-item-detail {
+                width: 100%;
+                display: flex;
+                padding: 0;
+                border-radius: var(--border-radius-lg);
+                border: var(--border-sm);
+                overflow: hidden;
+
+                .item-thumb a img {
+                    width: 150px;
+                    height: calc(150px / (var(--aspect-ratio-poster)));
+                }
+
+                .item-summary {
+                    flex: 1;
+                    padding: var(--spacing-xs) var(--spacing-md);
+                    background-color: var(--color-zone-click-dark);
+
+                    .post-title h3 {
+                        margin: 0;
+
+                        a {
+                            font-size: var(--font-size-xl);
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 2;
+                            overflow: hidden;
+                        }
+                    }
+
+                    .post-summary {
+                        margin: 0;
+                        font-size: var(--font-size-sm);
+                        line-height: var(--line-height-sm);
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 7;
+                        overflow: hidden;
+                    }
+                }
+            }
+
+            @media (max-width: 1200px) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            @media (max-width: 768px) {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    }
+}
