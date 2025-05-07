@@ -1,9 +1,13 @@
 .c-blog__content {
 
+    @media (max-width: 768px) {
+        padding: 0 var(--spacing-md);
+    }
+
     #manga-filte-alphabeta-bar {
         display: grid;
         grid-template-columns: repeat(28, 1fr);
-        margin-bottom: 20px;
+        margin-bottom: var(--spacing-xxl);
         text-align: center;
         padding: 0 var(--spacing-md);
         border-radius: var(--border-radius-lg);
@@ -16,7 +20,7 @@
         }
 
         @media (max-width: 768px) {
-            grid-template-columns: repeat(14, 1fr);
+            grid-template-columns: repeat(7, 1fr);
         }
     }
 
@@ -24,6 +28,7 @@
         display: flex;
         flex-direction: column;
         gap: var(--spacing-xxl);
+        margin-bottom: var(--spacing-xxl);
 
         .page-listing-item .row {
             display: grid;
@@ -34,6 +39,9 @@
                 width: 100%;
                 display: flex;
                 padding: 0;
+                border-radius: var(--border-radius-lg);
+                border: var(--border-sm);
+                overflow: hidden;
 
                 .item-thumb a img {
                     width: 150px;
@@ -43,7 +51,7 @@
                 .item-summary {
                     flex: 1;
                     padding: var(--spacing-xs) var(--spacing-md);
-                    background-color: var(--color-zone);
+                    background-color: var(--color-zone-click-dark);
 
                     .post-title h3 {
                         margin: 0;
