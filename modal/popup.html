@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>VoirAnime DarkMod</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="../versions/v200/variables.css">
+</head>
+<body>
+<div class="popup-header">
+    <img src="../icons/icon128.png" alt="Logo VoirAnime DarkMod" class="popup-logo">
+    <h1>VoirAnime DarkMod</h1>
+</div>
+
+<p class="popup-description">
+    Active le thème sombre et améliore ton expérience sur VoirAnime.
+</p>
+
+<div class="toggle-container">
+    <label class="switch">
+        <input type="checkbox" id="toggleSwitch">
+        <span class="slider"></span>
+    </label>
+    <span id="labelText">Activer l’extension</span>
+</div>
+
+<div class="container-select">
+    <div class="theme-select">
+        <select id="themeSelector" class="select-view">
+            <option value="dark">Sombre</option>
+            <option value="light">Clair</option>
+        </select>
+        <label for="themeSelector">Thème</label>
+    </div>
+
+    <div class="version-select">
+        <select id="versionSelector" class="select-view">
+            <option value="2">v2.0.0</option>
+            <option value="1">v1.2.0</option>
+        </select>
+        <label for="versionSelector">Version</label>
+    </div>
+</div>
+
+<footer class="popup-footer">
+    <a href="https://voiranime.com" target="_blank">→ Accéder à VoirAnime ←</a>
+    <div class="footer-links">
+        <div class="link-chrome link">
+            <a href="https://chromewebstore.google.com/detail/darkmod-voiranime-streami/dckaidelfhmapnkeejdihjbdbafckelh" target="_blank">
+                <img src="../img/chrome-web-store.webp" alt="Chrome Web Store" class="chrome-icon">
+                <span>Chrome<br>Web Store</span>
+            </a>
+        </div>
+        <div class="link-firefox link">
+            <a href="https://addons.mozilla.org/fr/firefox/addon/voiranime-darkmod/" target="_blank">
+                <img src="../img/firefox-add-ons.webp" alt="Firefox Add-ons" class="firefox-icon">
+                <span>Firefox<br>Add-ons</span>
+            </a>
+        </div>
+        <div class="link-github link">
+            <a href="https://github.com/Oriloo/VoirAnime-DarkMod" target="_blank">
+                <img src="../img/github.webp" alt="GitHub" class="github-icon">
+                <span>GitHub</span>
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script src="popup.js"></script>
+</body>
+</html>

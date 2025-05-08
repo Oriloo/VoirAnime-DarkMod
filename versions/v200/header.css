@@ -6,7 +6,7 @@ header.site-header {
     .c-header__top {
         display: flex;
         flex-direction: column-reverse;
-        background-color: var(--color-bg);
+        background-color: var(--color-L-dark);
 
         .search-main-menu {
             display: flex;
@@ -149,7 +149,11 @@ header.site-header {
                         .nav {
                             display: flex;
                             gap: var(--spacing-xl);
-                            .menu-item a { font-size: var(--font-size-lg); }
+                            .menu-item a {
+                                color: var(--color-L-primary-dark);
+                                font-size: var(--font-size-lg);
+                                &:hover { color: var(--color-brand); }
+                            }
                         }
                     }
 
@@ -173,7 +177,7 @@ header.site-header {
                             span {
                                 width: 35px;
                                 height: 4px;
-                                background-color: var(--color-primary);
+                                background-color: var(--color-L-primary-dark);
                                 border-radius: var(--border-radius-sm);
                                 transition: var(--transition-medium);
                                 transform-origin: center;
