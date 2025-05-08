@@ -39,9 +39,9 @@
                 width: 100%;
                 display: flex;
                 padding: 0;
-                border-radius: var(--border-radius-lg);
+                border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
                 border: var(--border-sm);
-                overflow: hidden;
+                background-color: var(--color-zone-click-dark);
 
                 .item-thumb a img {
                     width: 150px;
@@ -51,7 +51,6 @@
                 .item-summary {
                     flex: 1;
                     padding: var(--spacing-xs) var(--spacing-md);
-                    background-color: var(--color-zone-click-dark);
 
                     .post-title h3 {
                         margin: 0;

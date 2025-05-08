@@ -12,7 +12,7 @@ html, body {
     font-size: var(--font-size-md);
     line-height: var(--line-height-md);
     color: var(--color-primary);
-    background-color: var(--color-bg);
+    background-color: var(--color-black);
 
     &.open_canvas {
         pointer-events: none;
@@ -42,4 +42,11 @@ a {
     .site-header {}
     .site-content { flex: 1; }
     .site-footer {}
+}
+
+label, button {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
