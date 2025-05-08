@@ -31,7 +31,8 @@
     {
       "resources": [
         "styles/all.css",
-        "styles/liste.css"
+        "styles/liste.css",
+        "old-versions/v120/main.css"
       ],
       "matches": ["*://*.voiranime.com/*"]
     }

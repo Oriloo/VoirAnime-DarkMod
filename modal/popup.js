@@ -1,25 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('toggleSwitch');
+    const toggle        = document.getElementById('toggleSwitch');
     const themeSelector = document.getElementById('themeSelector');
+    const versionSelect = document.getElementById('versionSelector');
 
-    // Charger l'état actuel
-    chrome.storage.sync.get({ enabled: true, theme: 'dark' }, data => {
-        toggle.checked = data.enabled;
-        updateLabel(data.enabled);
-        themeSelector.value = data.theme || 'dark';
-    });
+    // Charger l'état actuel (enabled, theme, version)
+    chrome.storage.sync.get(
+        { enabled: true, theme: 'dark', version: '2' },
+        data => {
+            toggle.checked        = data.enabled;
+            themeSelector.value   = data.theme;
+            versionSelect.value   = data.version;
+            updateLabel(data.enabled);
+        }
+    );
 
-    // Changement de l'état de l'extension
+    // Quand on change on/off
     toggle.addEventListener('change', () => {
         const on = toggle.checked;
         chrome.storage.sync.set({ enabled: on });
         updateLabel(on);
     });
 
-    // Changement de thème
+    // Quand on change de thème
     themeSelector.addEventListener('change', () => {
-        const theme = themeSelector.value;
-        chrome.storage.sync.set({ theme: theme });
+        chrome.storage.sync.set({ theme: themeSelector.value });
+    });
+
+    // Quand on change de version
+    versionSelect.addEventListener('change', () => {
+        chrome.storage.sync.set({ version: versionSelect.value });
     });
 });
 
