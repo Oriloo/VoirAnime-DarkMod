@@ -1,125 +1,116 @@
 (() => {
-    const CUSTOM_ATTR    = 'data-custom-style';
-    const STYLE_ALL      = chrome.runtime.getURL('versions/v200/main.css');
-    const STYLE_LISTE    = chrome.runtime.getURL('versions/v200/liste.css');
-    const STYLE_V120     = chrome.runtime.getURL('versions/v120/main.css');
-    const STYLE_HIDE     = chrome.runtime.getURL('versions/v200/hide-search.css');
-    const PATH_LISTE_RX  = /^https?:\/\/[^/]+\/liste-danimes\/.*$/;
+    const CUSTOM_ATTR = 'data-custom-style';
+    const HEAD = document.head || document.documentElement;
 
-    function applyV2(theme, search) {
-        document
-            .querySelectorAll(`link[rel="stylesheet"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
-            .forEach(el => el.tagName.toLowerCase() === 'link'
-                ? el.disabled = true
-                : el.remove()
-            );
+    const URLS = {
+        v2: {
+            main: chrome.runtime.getURL('versions/v200/_build.css'),
+            list: chrome.runtime.getURL('versions/v200/liste.css'),
+            hide: chrome.runtime.getURL('versions/v200/hide-search.css')
+        },
+        v1: chrome.runtime.getURL('versions/v120/_build.css'),
+        listPattern: /^https?:\/\/[^/]+\/liste-danimes\/.*$/
+    };
 
-        if (!document.querySelector(`link[href="${STYLE_ALL}"]`)) {
-            const l = document.createElement('link');
-            l.rel = 'stylesheet';
-            l.href = STYLE_ALL;
-            l.setAttribute(CUSTOM_ATTR, 'true');
-            document.head.appendChild(l);
-        }
+    let config = { enabled: true, version: '2', theme: 'dark', search: 'fixe' };
+    let minimalStyle = null;
 
-        if (PATH_LISTE_RX.test(location.href)
-            && !document.querySelector(`link[href="${STYLE_LISTE}"]`)
-        ) {
-            const l = document.createElement('link');
-            l.rel = 'stylesheet';
-            l.href = STYLE_LISTE;
-            l.setAttribute(CUSTOM_ATTR, 'true');
-            document.head.appendChild(l);
-        }
+    const createLink = href => {
+        const l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = href;
+        l.setAttribute(CUSTOM_ATTR, 'true');
+        return l;
+    };
 
-        const existingHide = document.querySelector(`link[href="${STYLE_HIDE}"]`);
-        if (existingHide) existingHide.remove();
-        if (search === 'cacher') {
-            const l = document.createElement('link');
-            l.rel = 'stylesheet';
-            l.href = STYLE_HIDE;
-            l.setAttribute(CUSTOM_ATTR, 'true');
-            document.head.appendChild(l);
-        }
+    const removeInjected = () => {
+        if (minimalStyle) minimalStyle.remove();
+        document.querySelectorAll(`link[rel="stylesheet"][${CUSTOM_ATTR}], style[${CUSTOM_ATTR}]`).forEach(el => el.remove());
+    };
 
-        document.documentElement.classList.toggle('theme-light', theme === 'light');
-    }
-
-    function applyV1(theme) {
-        if (!document.querySelector(`link[href="${STYLE_V120}"]`)) {
-            const l = document.createElement('link');
-            l.rel = 'stylesheet';
-            l.href = STYLE_V120;
-            l.setAttribute(CUSTOM_ATTR, 'true');
-            document.head.appendChild(l);
-        }
-
-        document.documentElement.classList.toggle('theme-light', theme === 'light');
-    }
-
-    const observer = new MutationObserver(muts => {
-        for (const m of muts) {
-            for (const node of m.addedNodes) {
-                if (node.nodeType === 1 &&
-                    (node.matches('link[rel="stylesheet"]:not([data-custom-style])') ||
-                        node.matches('style:not([data-custom-style])'))
-                ) {
-                    chrome.storage.sync.get(
-                        { version: '2', theme: 'dark', search: 'fixe' },
-                        data => {
-                            if (data.version === '2') {
-                                applyV2(data.theme, data.search);
-                            } else {
-                                applyV1(data.theme);
-                            }
-                        }
-                    );
-                    return;
-                }
+    const injectV2Main = () => {
+        try {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', URLS.v2.main, false);
+            xhr.send();
+            if (xhr.status === 200) {
+                const s = document.createElement('style');
+                s.setAttribute(CUSTOM_ATTR, 'true');
+                s.textContent = xhr.responseText;
+                HEAD.appendChild(s);
             }
+        } catch {};
+    };
+
+    const applyV2 = () => {
+        HEAD.querySelectorAll(`link[rel="stylesheet"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
+            .forEach(el => el.tagName === 'LINK' ? el.disabled = true : el.remove());
+
+        if (!HEAD.querySelector(`style[${CUSTOM_ATTR}]`)) {
+            injectV2Main();
         }
+
+        if (!HEAD.querySelector(`link[href="${URLS.v2.main}"]`)) {
+            const l = createLink(URLS.v2.main);
+            HEAD.appendChild(l);
+        }
+
+        if (URLS.listPattern.test(location.href) && !HEAD.querySelector(`link[href="${URLS.v2.list}"]`)) {
+            HEAD.appendChild(createLink(URLS.v2.list));
+        }
+
+        const eh = HEAD.querySelector(`link[href="${URLS.v2.hide}"]`);
+        if (eh) eh.remove();
+        if (config.search === 'cacher') HEAD.appendChild(createLink(URLS.v2.hide));
+
+        document.documentElement.classList.toggle('theme-light', config.theme === 'light');
+    };
+
+    const applyV1 = () => {
+        if (!HEAD.querySelector(`link[href="${URLS.v1}"]`)) {
+            HEAD.appendChild(createLink(URLS.v1));
+        }
+        document.documentElement.classList.toggle('theme-light', config.theme === 'light');
+    };
+
+    const observerV2 = new MutationObserver(records => {
+        records.forEach(rec => rec.addedNodes.forEach(n => {
+            if (n.nodeType === 1) {
+                if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) n.disabled = true;
+                else if (n.matches('style:not([data-custom-style])')) n.remove();
+            }
+        }));
     });
 
     function init() {
-        chrome.storage.sync.get(
-            { enabled: true, version: '2', theme: 'dark', search: 'fixe' },
-            data => {
-                if (!data.enabled) return console.log('DarkMod désactivé.');
-
-                console.log(`DarkMod v${data.version} (th:${data.theme}, sc:${data.search})`);
-
-                const run = () => {
-                    if (data.version === '2') {
-                        applyV2(data.theme, data.search);
-                    } else {
-                        applyV1(data.theme);
-                    }
-                };
-
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', run);
-                } else {
-                    run();
-                }
-
-                if (data.version === '2') {
-                    observer.observe(
-                        document.head || document.documentElement,
-                        { childList: true, subtree: true }
-                    );
-                }
+        chrome.storage.sync.get(config, data => {
+            config = data;
+            if (!config.enabled) {
+                removeInjected();
+                return;
             }
-        );
-    }
 
-    chrome.storage.onChanged.addListener((changes, area) => {
-        if (area === 'sync' &&
-            (changes.enabled || changes.theme || changes.version || changes.search)
-        ) {
-            console.log('Configuration modifiée, rechargement de la page.');
-            window.location.reload();
-        }
-    });
+            // minimal style only if enabled
+            minimalStyle = document.createElement('style');
+            minimalStyle.id = 'darkmod-minimal';
+            minimalStyle.textContent = 'html,body{background:#121212!important;color:#ccc!important;}';
+            HEAD.appendChild(minimalStyle);
+
+            if (config.version === '2') {
+                injectV2Main();
+                applyV2();
+                observerV2.observe(HEAD, { childList: true, subtree: true });
+            } else {
+                applyV1();
+            }
+        });
+
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'sync' && ['enabled','version','theme','search'].some(k => k in changes)) {
+                window.location.reload();
+            }
+        });
+    }
 
     init();
 })();
