@@ -84,7 +84,7 @@ span, a, a.open-search-main-menu:hover i.icon.ion-ios-search, .h4 {
         justify-content: center !important;
         .main-col-inner, .c-page {
           margin: 0 -20% !important;
-          width: 100vw !important;
+          width: 100% !important;
           max-width: 1200px !important;
           .c-nav-tabs {
             a {
