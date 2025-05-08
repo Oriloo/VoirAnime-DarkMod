@@ -124,8 +124,8 @@ header.site-header {
 
                 .row .col-md-12 .main-navigation_wrap {
                     display: flex;
-                    height: 56px;
-                    padding: var(--spacing-xl);
+                    height: 64px;
+                    padding: 0 var(--spacing-xl);
 
                     @media (max-width: 992px) {
                         justify-content: space-between;
@@ -144,7 +144,6 @@ header.site-header {
                         display: flex;
                         justify-content: end;
                         align-items: center;
-                        margin-left: var(--spacing-xl);
 
                         .nav {
                             display: flex;

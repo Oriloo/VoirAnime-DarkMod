@@ -1,0 +1,38 @@
+.c-header__top {
+    .search-navigation {
+        display: flex !important;
+        justify-content: end;
+        align-items: center;
+        padding-left: var(--spacing-lg);
+
+        .open-search-main-menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            padding: var(--spacing-sm);
+            background-color: var(--color-bg-light);
+            border-radius: var(--border-radius-xl);
+            border: var(--border-sm);
+            &:hover { background-color: var(--color-zone-hover); }
+
+            .ion-android-close { display: none; }
+            .icon { font-size: var(--font-size-xxl); }
+            &.search-open {
+                .ion-android-close { display: block; }
+                .ion-ios-search { display: none; }
+            }
+        }
+
+        @media (max-width: 992px) {
+            flex: 1;
+            padding: 0 var(--spacing-lg);
+        }
+    }
+
+    .search-main-menu {
+        display: none !important;
+        &.active { display: block !important; }
+    }
+}
