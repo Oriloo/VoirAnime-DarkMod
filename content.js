@@ -4,7 +4,7 @@
     const STYLE_LISTE   = chrome.runtime.getURL('styles/liste.css');
     const PATH_LISTE_RX = /^https?:\/\/[^/]+\/liste-danimes\/.*$/;
 
-    function replaceStyles() {
+    function replaceStyles(theme) {
         try {
             // désactive tous les styles natifs/non-marqués
             document
@@ -23,7 +23,7 @@
                 document.head.appendChild(linkAll);
             }
 
-            // Si on est sur /liste-danimes/, insère liste.css
+            // Si sur /liste-danimes/, insère liste.css
             if (PATH_LISTE_RX.test(location.href)
                 && !document.querySelector(`link[rel="stylesheet"][href="${STYLE_LISTE}"]`)
             ) {
@@ -33,6 +33,10 @@
                 linkListe.setAttribute(CUSTOM_ATTR, 'true');
                 document.head.appendChild(linkListe);
             }
+
+            // Appliquer le thème : ajouter ou retirer .theme-light
+            document.documentElement.classList.toggle('theme-light', theme === 'light');
+
         } catch (err) {
             console.error('Erreur dans replaceStyles():', err);
         }
@@ -45,21 +49,45 @@
                     node.matches('link[rel="stylesheet"]:not([data-custom-style])') ||
                     node.matches('style:not([data-custom-style])')
                 )) {
-                    replaceStyles();
+                    // Re-appliquer les styles en cas d'ajout
+                    chrome.storage.sync.get({ theme: 'dark' }, data => {
+                        replaceStyles(data.theme);
+                    });
                     return;
                 }
             }
         }
     });
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', replaceStyles);
-    } else {
-        replaceStyles();
+    function initIfEnabled() {
+        chrome.storage.sync.get({ enabled: true, theme: 'dark' }, data => {
+            if (!data.enabled) {
+                console.log('DarkMod désactivé.');
+                return;
+            }
+
+            console.log('DarkMod activé avec thème :', data.theme);
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => replaceStyles(data.theme));
+            } else {
+                replaceStyles(data.theme);
+            }
+
+            observer.observe(document.head || document.documentElement, {
+                childList: true,
+                subtree: true
+            });
+        });
     }
 
-    observer.observe(document.head || document.documentElement, {
-        childList: true,
-        subtree: true
+    // Écoute des changements pour recharger
+    chrome.storage.onChanged.addListener((changes, area) => {
+        if (area === 'sync' && (changes.enabled || changes.theme)) {
+            console.log('Changement détecté, rechargement de la page.');
+            window.location.reload();
+        }
     });
+
+    initIfEnabled();
 })();
