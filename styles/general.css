@@ -43,3 +43,10 @@ a {
     .site-content { flex: 1; }
     .site-footer {}
 }
+
+label, button {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
