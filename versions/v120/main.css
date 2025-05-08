@@ -103,7 +103,7 @@ span, a, a.open-search-main-menu:hover i.icon.ion-ios-search, .h4 {
   }
 }
 
-/* numéraux de page */
+/* numéros de page */
 .wp-pagenavi {
   .pages, .first, .previouspostslink, .extend, .nextpostslink, .last {
     background-color: var(--color-bg-light) !important;
