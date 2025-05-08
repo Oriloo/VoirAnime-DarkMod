@@ -1,4 +1,4 @@
-@import "../../styles/variables.css";
+@import "../v200/variables.css";
 
 /* éléments suprimer */
 .sidebar-col, .c-sub-header-nav, .clone-header, .ad {

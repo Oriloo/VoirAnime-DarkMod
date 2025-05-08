@@ -30,9 +30,9 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "styles/all.css",
-        "styles/liste.css",
-        "old-versions/v120/main.css"
+        "versions/v200/main.css",
+        "versions/v200/liste.css",
+        "versions/v120/main.css"
       ],
       "matches": ["*://*.voiranime.com/*"]
     }

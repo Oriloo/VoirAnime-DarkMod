@@ -163,11 +163,11 @@
             margin-top: var(--spacing-lg);
             color: transparent;
             &::before {
-                content: url("../img/not-found-512.webp");
+                content: url("../../img/not-found-512.webp");
                 display: block;
 
                 @media (max-width: 576px) {
-                    content: url("../img/not-found-256.webp");
+                    content: url("../../img/not-found-256.webp");
                 }
             }
         }
