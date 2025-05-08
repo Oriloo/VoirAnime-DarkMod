@@ -13,7 +13,6 @@
     };
 
     let config = { enabled: true, version: '2', theme: 'dark', search: 'fixe' };
-    let minimalStyle = null;
 
     const createLink = href => {
         const l = document.createElement('link');
@@ -24,7 +23,6 @@
     };
 
     const removeInjected = () => {
-        if (minimalStyle) minimalStyle.remove();
         document.querySelectorAll(`link[rel="stylesheet"][${CUSTOM_ATTR}], style[${CUSTOM_ATTR}]`).forEach(el => el.remove());
     };
 
@@ -39,21 +37,20 @@
                 s.textContent = xhr.responseText;
                 HEAD.appendChild(s);
             }
-        } catch {};
+        } catch {}
     };
 
+    injectV2Main();
+    HEAD.querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
+        if (!el.hasAttribute(CUSTOM_ATTR)) {
+            if (el.tagName === 'LINK') el.disabled = true;
+            else el.remove();
+        }
+    });
+
     const applyV2 = () => {
-        HEAD.querySelectorAll(`link[rel="stylesheet"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
+        HEAD.querySelectorAll(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
             .forEach(el => el.tagName === 'LINK' ? el.disabled = true : el.remove());
-
-        if (!HEAD.querySelector(`style[${CUSTOM_ATTR}]`)) {
-            injectV2Main();
-        }
-
-        if (!HEAD.querySelector(`link[href="${URLS.v2.main}"]`)) {
-            const l = createLink(URLS.v2.main);
-            HEAD.appendChild(l);
-        }
 
         if (URLS.listPattern.test(location.href) && !HEAD.querySelector(`link[href="${URLS.v2.list}"]`)) {
             HEAD.appendChild(createLink(URLS.v2.list));
@@ -90,23 +87,17 @@
                 return;
             }
 
-            // minimal style only if enabled
-            minimalStyle = document.createElement('style');
-            minimalStyle.id = 'darkmod-minimal';
-            minimalStyle.textContent = 'html,body{background:#121212!important;color:#ccc!important;}';
-            HEAD.appendChild(minimalStyle);
-
             if (config.version === '2') {
-                injectV2Main();
                 applyV2();
                 observerV2.observe(HEAD, { childList: true, subtree: true });
             } else {
+                removeInjected();
                 applyV1();
             }
         });
 
         chrome.storage.onChanged.addListener((changes, area) => {
-            if (area === 'sync' && ['enabled','version','theme','search'].some(k => k in changes)) {
+            if (area === 'sync' && ['enabled', 'version', 'theme', 'search'].some(k => k in changes)) {
                 window.location.reload();
             }
         });
