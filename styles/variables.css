@@ -18,6 +18,12 @@
     --color-zone-hover: #383838;
     --color-border: #272727;
 
+    /* --- Locked Colors --- */
+    --color-L-dark: #0f0f0f;
+    --color-L-primary-dark: #fff;
+    --color-L-light: #fff;
+    --color-L-primary-light: #333333;
+
     /* --- Typography --- */
     --font-family-base: 'Inter', sans-serif;
     --font-family-heading: 'Poppins', sans-serif;
@@ -100,4 +106,22 @@
 
     --animation-bounce: bounce 1s infinite;
     --animation-fade-in: fadeIn 0.5s ease-in;
+}
+
+.theme-light {
+    /* --- Colors --- */
+    --color-primary: #333333;
+    --color-secondary: #727272;
+    --color-tertiary: #919191;
+
+    --color-black: #fff;
+    --color-white: #000;
+
+    --color-bg: #fff;
+    --color-bg-light: #f3f3f3;
+    --color-zone: #fff;
+    --color-zone-click: #fff;
+    --color-zone-click-dark: rgba(0, 0, 0, 0.05);
+    --color-zone-hover: #f2f2f2;
+    --color-border: #c6c6c6;
 }
