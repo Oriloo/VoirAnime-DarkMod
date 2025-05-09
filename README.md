@@ -59,7 +59,7 @@ Aussi disponible sur Android via le l'aplication **Kiwi Browser** ou **Firefox**
 
 ### Pour les développeurs
 1. Clonez ou téléchargez cette extension.
-2. Ouvrez `chrome://extensions/` (ou `about:addons` sous Firefox).
+2. Ouvrez `chrome://extensions/` (ou `about:debugging#/runtime/this-firefox` sous Firefox).
 3. Activez le **Mode développeur**.
 4. Cliquez sur **Charger l’extension non empaquetée** et sélectionnez le dossier du projet.
 
