@@ -51,7 +51,7 @@
 
 Ouvrez la page de l’extension sur le **[Chrome Web Store](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)** ou sur le **[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)**.
 <br>
-Aussi disponible sur Android via le l'aplication **Kiwi Browser** ou **Firefox**.
+Aussi disponible sur Android via l'aplication **Kiwi Browser** ou **Firefox**.
 
 > Des pop-ups peuvent apparaître lors de la lecture d’épisodes.  
 > Pour une protection maximale, combinez l’extension avec un bloqueur de contenus  
