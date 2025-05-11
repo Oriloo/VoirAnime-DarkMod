@@ -83,7 +83,7 @@ Aussi disponible sur Android via l'aplication **Kiwi Browser** ou **Firefox**.
 * Popup de configuration amélioré.
 * Support de la version legacy v1.2.0.
 
-### v1.2.0 (2024-xx-xx)
+### v1.2.0 (2023 2024)
 
 * \[Anciennes fonctionnalités...]
 
