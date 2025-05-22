@@ -51,7 +51,7 @@
 
 Ouvrez la page de l’extension sur le **[Chrome Web Store](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)** ou sur le **[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)**.
 <br>
-Aussi disponible sur Android via le l'aplication **Kiwi Browser** ou **Firefox**.
+Aussi disponible sur Android via l'aplication **Kiwi Browser** ou **Firefox**.
 
 > Des pop-ups peuvent apparaître lors de la lecture d’épisodes.  
 > Pour une protection maximale, combinez l’extension avec un bloqueur de contenus  
@@ -59,7 +59,7 @@ Aussi disponible sur Android via le l'aplication **Kiwi Browser** ou **Firefox**
 
 ### Pour les développeurs
 1. Clonez ou téléchargez cette extension.
-2. Ouvrez `chrome://extensions/` (ou `about:addons` sous Firefox).
+2. Ouvrez `chrome://extensions/` (ou `about:debugging#/runtime/this-firefox` sous Firefox).
 3. Activez le **Mode développeur**.
 4. Cliquez sur **Charger l’extension non empaquetée** et sélectionnez le dossier du projet.
 
@@ -83,7 +83,7 @@ Aussi disponible sur Android via le l'aplication **Kiwi Browser** ou **Firefox**
 * Popup de configuration amélioré.
 * Support de la version legacy v1.2.0.
 
-### v1.2.0 (2024-xx-xx)
+### v1.2.0 (2023 2024)
 
 * \[Anciennes fonctionnalités...]
 
