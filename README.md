@@ -10,7 +10,7 @@
 ![Licence](https://img.shields.io/badge/licence-GPLv3-green)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
-![Image Promotionnelle](img/ImagePromotionnelle.png)
+![Image Promotionnelle](img/ImagePromotionnelle.webp)
 </div>
 
 **VoirAnime DarkMod** est une extension pour [VoirAnime](https://voiranime.com/) permettant de personnaliser l’apparence du site (thème sombre/clair, modules CSS modulaires, etc.).
