@@ -15,11 +15,11 @@
         .c-thumbnail {
             img { display: none; }
             &::after {
-                content: url('../../img/error-404-512.webp');
+                content: url('https://i.postimg.cc/Y0Jw2hP0/error-404-512.webp');
                 display: block;
 
                 @media (max-width: 576px) {
-                    content: url("../../img/error-404-256.webp");
+                    content: url("https://i.postimg.cc/L5qpMzNG/error-404-256.webp");
                 }
             }
         }
