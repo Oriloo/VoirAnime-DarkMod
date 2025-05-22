@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "DarkMod - VoirAnime : streaming animes",
+  "name": "VoirAnime - DarkMod : streaming animes",
   "description": "Thème sombre et plus encore, pour l'ensemble du site \"voiranime.com\" (VA).",
-  "version": "3.0.0",
+  "version": "2.0.0",
   "author": "Orilo",
   "icons": {
     "16": "icons/icon16.png",
@@ -11,14 +11,28 @@
     "128": "icons/icon128.png"
   },
   "permissions": [
-    "scripting"
+    "scripting",
+    "storage"
   ],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_popup": "modal/popup.html",
+    "default_title": "VoirAnime DarkMod"
+  },
   "host_permissions": [
     "*://*.voiranime.com/*"
   ],
   "web_accessible_resources": [
     {
-      "resources": ["styles/all.css"],
+      "resources": [
+        "versions/v200/*.css",
+        "versions/v120/*.css"
+      ],
       "matches": ["*://*.voiranime.com/*"]
     }
   ],
@@ -31,5 +45,11 @@
   ],
   "content_security_policy": {
     "extension_pages": "default-src 'self'; style-src 'self';"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "voiranime-darkmod2@orilo",
+      "strict_min_version": "109.0"
+    }
   }
 }

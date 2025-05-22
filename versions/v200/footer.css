@@ -1,20 +1,20 @@
 footer.site-footer {
-    border-top: 1px solid var(--color-border);
+    border-top: var(--border-sm);
     text-align: center;
-    padding: 10px 0;
+    padding: var(--spacing-sm) 0;
 
     .top-footer {
-        padding: 10px 0;
+        padding: var(--spacing-sm) 0;
 
         .social_account__item {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin: 0 10px;
+            gap: var(--spacing-md);
+            margin: 0 var(--spacing-sm);
             font-size: var(--font-size-xl);
             color: var(--color-primary);
-            transition: all 0.3s ease;
+            transition: var(--transition-fast);
             &:hover { color: var(--color-brand); }
 
             .social-icons {
@@ -29,7 +29,7 @@ footer.site-footer {
     .bottom-footer {
         .nav-footer {}
         .copyright {
-            padding: 10px 0;
+            padding: var(--spacing-sm) 0;
             font-size: var(--font-size-sm);
             color: var(--color-secondary);
         }

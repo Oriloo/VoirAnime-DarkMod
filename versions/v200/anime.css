@@ -1,0 +1,328 @@
+.wp-manga-template-default .site-content {
+    .profile-manga .container {
+        background-color: var(--color-black);
+        padding: var(--spacing-lg)
+                 var(--spacing-xl)
+                 0
+                 var(--spacing-xl);
+        position: relative;
+
+        .c-breadcrumb-wrapper { display: none; }
+        .post-title {
+            padding-bottom: var(--spacing-lg);
+            max-width: var(--breakpoint-xl);
+
+            h1 {
+                font-size: var(--font-size-xxxl);
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+
+                @media (max-width: 576px) {
+                    font-size: var(--font-size-xxl);
+                }
+            }
+        }
+
+        .tab-summary {
+            .summary_image {
+                position: relative;
+                padding-bottom: var(--spacing-lg);
+
+                a {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    &:hover { color: var(--color-primary) }
+                }
+                &:not(:has(#trailer)) a::before {
+                    content: 'Aucun trailer n\'a été trouvé pour cet anime.';
+                    width: calc(100% - var(--spacing-xxs));
+                    height: 300px;
+                    margin-left: var(--spacing-xxs);
+                    background: var(--color-zone);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .play-trailer-btn { display: none; }
+                #trailer {
+                    flex: 1;
+
+                    .modal-body { height: 300px; }
+                    iframe {
+                        width: calc(100% - var(--spacing-xxs));
+                        height: 300px;
+                        margin-left: var(--spacing-xxs);
+                    }
+                }
+
+                img {
+                    width: calc(300px * var(--aspect-ratio-poster));
+                    height: 300px;
+                    object-fit: cover;
+                }
+
+                .manga-vf-flag {
+                    position: absolute;
+                    top: 270px; left: 0;
+                    width: 200px;
+                    height: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: var(--font-size-lg);
+                    z-index: var(--z-index-base);
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        top: 0; left: 0;
+                        width: 100%; height: 100%;
+                        background: var(--color-brand-red);
+                        opacity: 0.85;
+                        z-index: var(--z-index-negative);
+                    }
+                }
+            }
+
+            @media (max-width: 576px) {
+                .summary_image {
+                    a { flex-direction: column-reverse; }
+                    &:not(:has(#trailer)) a::before { display: none; }
+
+                    #trailer {
+                        .modal-body,
+                        iframe {
+                            width: 100%;
+                            height: auto;
+                            aspect-ratio: var(--aspect-ratio-screen);
+                        }
+                    }
+
+                    img {
+                        width: calc(100vw - (2 * var(--spacing-xl)));
+                        height: calc((100vw - (2 * var(--spacing-xl))) / (var(--aspect-ratio-poster)));
+                        margin-bottom: var(--spacing-md);
+                    }
+
+                    .manga-vf-flag {
+                        top: calc((100vw - (2 * var(--spacing-xl))) / (var(--aspect-ratio-poster)) - 50px);
+                        width: calc(100vw - (2 * var(--spacing-xl)));
+                        height: 50px;
+                        font-size: var(--font-size-xxl);
+                    }
+                }
+            }
+
+            .summary_content {
+                position: relative;
+
+                .post-content {
+                    position: relative;
+
+                    .loader-inner {}
+                    .post-rating {
+                        position: absolute;
+                        top: -24.5px; right: 0;
+                        width: 520px;
+                        background-color: var(--color-bg);
+                        padding: var(--spacing-sm);
+                        padding-left: var(--spacing-lg);
+                        border-radius: 0 0 0 var(--border-radius-lg);
+                        &:hover {
+                            .post-total-rating { display: none; }
+                            .user-rating { display: flex; }
+                        }
+
+                        .post-total-rating,
+                        .user-rating {
+                            display: flex;
+                            align-items: center;
+                            gap: var(--spacing-xxs);
+                            line-height: var(--line-height-sm);
+
+                            .ratings_stars {
+                                color: var(--color-brand);
+                                font-size: var(--font-size-xxxl);
+                            }
+
+                            .score {
+                                margin-left: calc((255px - 67px) / 2);
+                                font-size: var(--font-size-xxxl);
+                            }
+                        }
+
+                        .user-rating {
+                            display: none;
+                            .score { margin-left: var(--spacing-xxs); }
+                        }
+                    }
+
+                    .post-content_item {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+
+                        .summary-heading {
+                            min-width: 110px;
+
+                            h5 {
+                                font-size: var(--font-size-lg);
+                                color: var(--color-secondary);
+                                margin-bottom: var(--spacing-sm);
+                            }
+                        }
+
+                        .summary-content { max-width: calc(100% - 650px); }
+                    }
+                }
+
+                .nav-links {
+                    position: absolute;
+                    top: 60px; right: 0;
+                    padding: var(--spacing-sm) 0;
+
+                    .c-btn {
+                        padding: var(--spacing-xxs) var(--spacing-sm);
+                        border-radius: var(--border-radius-sm);
+                        border: var(--border-sm);
+                        background-color: var(--color-zone-click);
+                        font-size: var(--font-size-lg);
+                    }
+
+                    #btn-read-last:before { content: '« '; }
+                    #btn-read-first:after { content: ' »'; }
+                }
+
+                @media (max-width: 1200px) {
+                    .post-content {
+                        .post-rating {
+                            position: static;
+                            top: 0;
+                            right: 0;
+                            width: 100%;
+                            border-radius: var(--border-radius-lg);
+                            margin-bottom: var(--spacing-lg);
+
+                            .post-total-rating,
+                            .user-rating {
+                                .score {
+                                    margin-left: var(--spacing-xxs);
+                                }
+                            }
+                        }
+
+                        .post-content_item .summary-content {
+                            max-width: 100%;
+                        }
+                    }
+
+                    .nav-links {
+                        position: static;
+                        top: 0; right: 0;
+                        padding: var(--spacing-sm) 0;
+                        margin-bottom: var(--spacing-lg);
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        gap: var(--spacing-sm);
+                    }
+                }
+                
+                @media (max-width: 576px) {
+                    .post-content {
+                        .post-rating {
+                            padding: var(--font-size-sm);
+
+                            .user-rating {
+                                .score {
+                                    font-size: var(--font-size-xl);
+                                }
+                            }
+                        }
+                    }
+
+                    .nav-links {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+
+    .main-col-inner {
+        .c-blog__heading {
+            position: relative;
+
+            h2 {
+                font-size: var(--font-size-xxl);
+                text-align: center;
+                padding-bottom: var(--spacing-sm);
+                margin-bottom: var(--spacing-lg);
+                border-bottom: var(--border-sm);
+                text-transform: uppercase;
+                .icon { display: none; }
+            }
+
+            .btn-reverse-order {
+                position: absolute;
+                top: 0; right: 0;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .icon:before {
+                    content: '⇅';
+                    font-size: var(--font-size-xxl);
+                    font-style: normal;
+                    font-weight: var(--font-weight-bold);
+                }
+            }
+        }
+
+        .description-summary { margin-bottom: var(--spacing-xxl); }
+        .listing-chapters_wrap {
+            margin-bottom: var(--spacing-xxl);
+
+            .wp-manga-chapter {
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                border-radius: var(--border-radius-sm);
+                &:hover { background-color: var(--color-zone-click); }
+
+                a {
+                    flex: 1;
+                    padding: var(--spacing-xxs) var(--spacing-sm);
+                    &:visited { color: var(--color-tertiary); }
+                }
+
+                .chapter-release-date i {
+                    position: absolute;
+                    top: 50%; right: 0;
+                    transform: translateY(-50%);
+                    padding-right: var(--spacing-sm);
+                    pointer-events: none;
+                    color: var(--color-secondary);
+                }
+            }
+        }
+
+        @media (max-width: 576px) {
+            padding: 0 var(--spacing-xl);
+
+            .listing-chapters_wrap {
+                .wp-manga-chapter {
+                    margin-bottom: var(--spacing-sm);
+                    i { display: none; }
+                }
+            }
+        }
+    }
+}

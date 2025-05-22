@@ -1,48 +1,111 @@
 <div align="center">
 
 # VoirAnime DarkMod
-**Thème sombre, AdBlock et bien plus pour tout le site [VoirAnime](https://voiranime.com/).**
+**Thème sombre et bien plus pour tout le site [VoirAnime](https://voiranime.com/).**
 
-![Version](https://img.shields.io/badge/version-1.1.5-blue)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)
-![Licence](https://img.shields.io/badge/licence-GPLv3-orange)
+![Firefox Add-ons](https://img.shields.io/amo/v/voiranime-darkmod)
+<br>
+![Licence](https://img.shields.io/badge/licence-GPLv3-green)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
-![Image Promotionnelle](img/ImagePromotionnelle.png)
+![Image Promotionnelle](img/ImagePromotionnelle.webp)
 </div>
 
-**VoirAnime DarkMod** applique un thème sombre homogène et nettoie l’interface du site [VoirAnime](https://voiranime.com/) afin d’offrir une expérience de visionnage plus confortable.
+**VoirAnime DarkMod** est une extension pour [VoirAnime](https://voiranime.com/) permettant de personnaliser l’apparence du site (thème sombre/clair, modules CSS modulaires, etc.).
 
-## Fonctionnalités
-- **Thème sombre** appliqué à l’ensemble du site.
-- **Blocage d’annonces** supprimant la majorité des publicités intégrées.
-- **Interface épurée** : éléments dupliqués ou superflus retirés.
-- **Commentaires masqués** pour éviter les spoilers.
+## 🚀 Nouveautés de la v2.0.0
 
-> Des pop-ups peuvent néanmoins apparaître lors de la lecture d’épisodes.  
+* Refonte complète de l’architecture CSS en modules séparés (`variables`, `header`, `content`, `footer`, etc.).
+* Ajout du thème clair (`.theme-light`) en plus du thème sombre.
+* Menu de configuration enrichi dans le popup (activation/désactivation, choix de version CSS, affichage de la barre de recherche).
+* Support de deux versions de styles : **v2.0.0** (new) et **v1.2.0** (old).
+* Amélioration des performances et de la maintenabilité du code.
+
+## ⚙️ Fonctionnalités
+
+1. **Thèmes**
+    * Thème sombre homogène sur tout le site.
+    * Thème clair optionnel via la classe `.theme-light`.
+   
+2. **Versions CSS**
+    * v2.0.0 : architecture modulaire, variables globales.
+    * v1.2.0 : version legacy unique (pour compatibilité).
+   
+3. **Interface de configuration** (popup)
+    * Activation/désactivation de l’extension.
+    * Sélecteur de thème (sombre / clair).
+    * Choix de version CSS (v2.0.0 / v1.2.0).
+    * Affichage ou masquage de la barre de recherche.
+   
+4. **Modules CSS**
+    * `variables.css` : palette de couleurs, typographies, breakpoints.
+    * `general.css`, `header.css`, `content.css`, `footer.css`, `pagination.css`, etc., pour chaque section et page.
+   
+5. **Injection dynamique**
+    * Utilisation de `chrome.storage` pour conserver les préférences.
+    * Injection/retrait de CSS via `chrome.scripting` dès le `document_start`.
+
+## 📦 Installation
+
+Ouvrez la page de l’extension sur le **[Chrome Web Store](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)** ou sur le **[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)**.
+<br>
+Aussi disponible sur Android via l'aplication **Kiwi Browser** ou **Firefox**.
+
+> Des pop-ups peuvent apparaître lors de la lecture d’épisodes.  
 > Pour une protection maximale, combinez l’extension avec un bloqueur de contenus  
 > tel que **[uBlock Origin](https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)**.
 
-\* L’extension se limite à modifier le CSS de VoirAnime ; elle n’altère ni ne stocke le contenu du site.
+### Pour les développeurs
+1. Clonez ou téléchargez cette extension.
+2. Ouvrez `chrome://extensions/` (ou `about:debugging#/runtime/this-firefox` sous Firefox).
+3. Activez le **Mode développeur**.
+4. Cliquez sur **Charger l’extension non empaquetée** et sélectionnez le dossier du projet.
 
-## Installation
-1. Ouvrez la page de l’extension sur le **[Chrome Web Store](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)**.
-2. Cliquez sur **Ajouter à Chrome** puis confirmez.
+## 📝 Utilisation
 
-## Contribuer
-Les contributions sont bienvenues !
-- Signalez un bug ou proposez une amélioration via l’onglet **Issues**.
-- Soumettez une **pull request** pour corriger du code ou ajouter une fonctionnalité.
+1. Cliquez sur l’icône de l’extension dans la barre d’outils.
+2. Dans le popup, configurez : thème, version CSS, barre de recherche.
 
-Merci de respecter le *Code de conduite* et les modèles d’issues fournis dans le dépôt.
+## 🛠️ Personnalisation avancée
 
-## Licence
-Ce projet est distribué sous licence **GNU GPL v3**.  
-Vous pouvez l’utiliser, le modifier et le redistribuer sous réserve de respecter les termes de la licence GNU General Public License, version 3.
+* Modifiez les variables globales dans `versions/v200/variables.css`.
+* Ajoutez ou ajustez des styles dans les modules CSS correspondant aux pages.
+* Étendez `popup.js` pour de nouvelles options de configuration.
 
-Pour plus d’informations, consultez le texte complet ici : [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.html).
+## 📝 Changelog
 
-## Remerciements
-- **[VoirAnime](https://voiranime.com/)** pour son contenu.
-- **[Oriloo](https://github.com/Oriloo)** pour le développement de l’extension.
+### v2.0.0 (2025-05-08)
 
-© 2023-2025 **[Oriloo](https://github.com/Oriloo)** — Projet non affilié à VoirAnime.
+* Architecture CSS entièrement modulaire.
+* Ajout du thème clair.
+* Popup de configuration amélioré.
+* Support de la version legacy v1.2.0.
+
+### v1.2.0 (2023 2024)
+
+* \[Anciennes fonctionnalités...]
+
+## 🤝 Contribuer
+
+Les contributions sont les bienvenues !
+
+1. Forkez le dépôt.
+2. Créez une branche (`git checkout -b feat/ma-fonctionnalité`).
+3. Committez vos modifications (`git commit -m 'feat: nouvelle fonctionnalité'`).
+4. Poussez vers la branche (`git push origin feature/ma-fonctionnalité`).
+5. Ouvrez une pull request.
+
+Merci de respecter le [Code de conduite](CODE_OF_CONDUCT.md).
+
+## 📄 Licence
+
+Ce projet est sous licence **GNU GPL v3**. Pour plus de détails, consultez [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html).
+
+## 🙏 Remerciements
+
+* **[VoirAnime](https://voiranime.com/)** pour son contenu.
+* **[Oriloo](https://github.com/Oriloo)** pour le développement initial.
+
+© 2023-2025 **Oriloo** — Projet non affilié à VoirAnime.
