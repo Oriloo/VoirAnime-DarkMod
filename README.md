@@ -5,7 +5,7 @@
 
 ![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)
-![Firefox Add-ons](https://img.shields.io/amo/v/voiranime_darkmod)
+![Firefox Add-ons](https://img.shields.io/amo/v/voiranime-darkmod)
 <br>
 ![Licence](https://img.shields.io/badge/licence-GPLv3-green)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
@@ -49,7 +49,7 @@
 
 ## 📦 Installation
 
-Ouvrez la page de l’extension sur le **[Chrome Web Store](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)** ou sur le **[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/voiranime_darkmod/)**.
+Ouvrez la page de l’extension sur le **[Chrome Web Store](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)** ou sur le **[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)**.
 <br>
 Aussi disponible sur Android via l'aplication **Kiwi Browser** ou **Firefox**.
 
