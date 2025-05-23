@@ -3,14 +3,14 @@
 # VoirAnime DarkMod
 **Thème sombre et bien plus pour tout le site [VoirAnime](https://voiranime.com/).**
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue)
-![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)
-![Firefox Add-ons](https://img.shields.io/amo/v/voiranime-darkmod)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)]()
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)
+[![Firefox Add-ons](https://img.shields.io/amo/v/voiranime-darkmod)](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)
 <br>
-![Licence](https://img.shields.io/badge/licence-GPLv3-green)
+[![Licence](https://img.shields.io/badge/licence-GPLv3-green)](LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
-![Image Promotionnelle](img/ImagePromotionnelle.webp)
+[![Image Promotionnelle](img/ImagePromotionnelle.webp)]()
 </div>
 
 **VoirAnime DarkMod** est une extension pour [VoirAnime](https://voiranime.com/) permettant de personnaliser l’apparence du site (thème sombre/clair, modules CSS modulaires, etc.).
