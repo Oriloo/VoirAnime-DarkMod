@@ -4,10 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const versionSelect       = document.getElementById('versionSelector');
     const searchSelectEl      = document.getElementById('searchSelect');
     const searchSelector      = document.getElementById('searchSelector');
-    const autoLecteurToggle   = document.getElementById('autoLecteurToggle');
     const lecteurSelector     = document.getElementById('lecteurSelector');
-    const lecteurSelectCont   = document.getElementById('lecteurSelectContainer');
-    const autoValiderToggle   = document.getElementById('autoValiderToggle');
+    const autoValiderSelector = document.getElementById('autoValiderSelector');
 
     chrome.storage.sync.get(
         {
@@ -20,16 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
             autoValiderEnabled: false
         },
         data => {
-            toggle.checked            = data.enabled;
-            themeSelector.value       = data.theme;
-            versionSelect.value       = data.version;
-            searchSelector.value      = data.search;
-            autoLecteurToggle.checked = data.autoLecteurEnabled;
-            lecteurSelector.value     = data.lecteurPreferred;
-            autoValiderToggle.checked = data.autoValiderEnabled;
+            toggle.checked          = data.enabled;
+            themeSelector.value     = data.theme;
+            versionSelect.value     = data.version;
+            searchSelector.value    = data.search;
+
+            // Lecteur : si désactivé → "default", sinon la valeur du lecteur préféré
+            lecteurSelector.value = data.autoLecteurEnabled ? data.lecteurPreferred : 'default';
+
+            // Auto-validé : si désactivé → "default", sinon "enabled"
+            autoValiderSelector.value = data.autoValiderEnabled ? 'enabled' : 'default';
+
             updateLabel(data.enabled);
             toggleSearchSelect(data.version);
-            toggleLecteurSelect(data.autoLecteurEnabled);
         }
     );
 
@@ -52,18 +53,21 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.sync.set({ search: searchSelector.value });
     });
 
-    autoLecteurToggle.addEventListener('change', () => {
-        const isEnabled = autoLecteurToggle.checked;
-        chrome.storage.sync.set({ autoLecteurEnabled: isEnabled });
-        toggleLecteurSelect(isEnabled);
-    });
-
     lecteurSelector.addEventListener('change', () => {
-        chrome.storage.sync.set({ lecteurPreferred: lecteurSelector.value });
+        const value = lecteurSelector.value;
+        if (value === 'default') {
+            chrome.storage.sync.set({ autoLecteurEnabled: false });
+        } else {
+            chrome.storage.sync.set({
+                autoLecteurEnabled: true,
+                lecteurPreferred: value
+            });
+        }
     });
 
-    autoValiderToggle.addEventListener('change', () => {
-        chrome.storage.sync.set({ autoValiderEnabled: autoValiderToggle.checked });
+    autoValiderSelector.addEventListener('change', () => {
+        const isEnabled = autoValiderSelector.value === 'enabled';
+        chrome.storage.sync.set({ autoValiderEnabled: isEnabled });
     });
 
     function updateLabel(on) {
@@ -73,9 +77,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleSearchSelect(version) {
         searchSelectEl.style.display = version === '2' ? 'block' : 'none';
-    }
-
-    function toggleLecteurSelect(enabled) {
-        lecteurSelectCont.style.display = enabled ? 'flex' : 'none';
     }
 });

@@ -149,36 +149,62 @@
         }
     };
 
-    // Fonction pour attendre et cliquer sur le bouton Valider
+    // Fonction pour attendre et cliquer sur le bouton Valider (observation continue)
     const waitForValiderButton = () => {
         if (!config.autoValiderEnabled) {
             console.log("[VoirAnime Auto] Auto-clic sur 'Valider' désactivé ⏸️");
             return;
         }
 
-        console.log("[VoirAnime Auto] Attente du bouton 'Valider'...");
+        console.log("[VoirAnime Auto] Observation continue du bouton 'Valider' activée 👀");
 
-        const button = document.querySelector('button.btn[type="submit"]');
-        if (!button) {
-            console.log("[VoirAnime Auto] Bouton 'Valider' non trouvé ❌");
-            return;
-        }
+        let currentButton = null;
+        let attrObserver = null;
 
-        if (!button.disabled) {
-            console.log("[VoirAnime Auto] Bouton 'Valider' déjà actif, on clique dessus ✅");
-            button.click();
-            return;
-        }
+        // Fonction pour gérer le clic sur le bouton une fois trouvé
+        const handleButton = (button) => {
+            // Si c'est le même bouton déjà géré, ne rien faire
+            if (button === currentButton) return;
 
-        const observer = new MutationObserver(() => {
+            // Nettoyer l'ancien observer d'attribut si existant
+            if (attrObserver) {
+                attrObserver.disconnect();
+                attrObserver = null;
+            }
+
+            currentButton = button;
+            console.log("[VoirAnime Auto] Nouveau bouton 'Valider' détecté 🔍");
+
             if (!button.disabled) {
-                console.log("[VoirAnime Auto] Bouton 'Valider' activé, on clique dessus ✅");
+                console.log("[VoirAnime Auto] Bouton 'Valider' déjà actif, on clique dessus ✅");
                 button.click();
-                observer.disconnect();
+                return;
+            }
+
+            // Observer les changements d'attribut disabled
+            attrObserver = new MutationObserver(() => {
+                if (!button.disabled) {
+                    console.log("[VoirAnime Auto] Bouton 'Valider' activé, on clique dessus ✅");
+                    button.click();
+                }
+            });
+            attrObserver.observe(button, { attributes: true, attributeFilter: ["disabled"] });
+        };
+
+        // Vérifier si un bouton existe déjà
+        const initialButton = document.querySelector('button.btn[type="submit"]');
+        if (initialButton) {
+            handleButton(initialButton);
+        }
+
+        // Observer le DOM en permanence pour détecter les nouveaux boutons
+        const domObserver = new MutationObserver(() => {
+            const btn = document.querySelector('button.btn[type="submit"]');
+            if (btn && btn !== currentButton) {
+                handleButton(btn);
             }
         });
-
-        observer.observe(button, { attributes: true, attributeFilter: ["disabled"] });
+        domObserver.observe(document.body, { childList: true, subtree: true });
     };
 
     // Fonction principale pour l'auto-sélection
@@ -206,6 +232,6 @@
             if (config.autoValiderEnabled) {
                 waitForValiderButton();
             }
-        }, 2000);
+        }, 1000);
     };
 })();

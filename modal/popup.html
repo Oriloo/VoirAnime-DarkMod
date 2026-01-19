@@ -21,7 +21,7 @@
         <input type="checkbox" id="toggleSwitch">
         <span class="slider"></span>
     </label>
-    <span id="labelText">Activer l’extension</span>
+    <span id="labelText">Activer l'extension</span>
 </div>
 
 <div class="container-select">
@@ -48,36 +48,27 @@
         </select>
         <label for="searchSelector">Recherche</label>
     </div>
-</div>
 
-<div class="auto-features-section">
-    <h3 class="section-title">Fonctionnalités automatiques</h3>
-
-    <div class="toggle-container auto-toggle">
-        <label class="switch">
-            <input type="checkbox" id="autoLecteurToggle">
-            <span class="slider"></span>
-        </label>
-        <span>Auto-sélect du lecteur</span>
-    </div>
-
-    <div class="lecteur-select-container" id="lecteurSelectContainer">
+    <div class="lecteur-select">
         <select id="lecteurSelector" class="select-view">
-            <option value="LECTEUR myTV">LECTEUR myTV</option>
-            <option value="LECTEUR MOON">LECTEUR MOON</option>
-            <option value="LECTEUR VOE">LECTEUR VOE</option>
-            <option value="LECTEUR Stape">LECTEUR Stape</option>
-            <option value="LECTEUR FHD1">LECTEUR FHD1</option>
+            <option value="default">Par défaut</option>
+            <option value="LECTEUR myTV">myTV</option>
+            <option value="LECTEUR MOON">MOON</option>
+            <option value="LECTEUR SB">SB</option>
+            <option value="LECTEUR VOE">VOE</option>
+            <option value="LECTEUR Stape">Stape</option>
+            <option value="LECTEUR FHD1">FHD1</option>
+            <option value="LECTEUR YU">YU</option>
         </select>
-        <label for="lecteurSelector">Lecteur préféré</label>
+        <label for="lecteurSelector">Lecteur auto</label>
     </div>
 
-    <div class="toggle-container auto-toggle">
-        <label class="switch">
-            <input type="checkbox" id="autoValiderToggle">
-            <span class="slider"></span>
-        </label>
-        <span>Auto-clic sur "Valider"</span>
+    <div class="valider-select">
+        <select id="autoValiderSelector" class="select-view">
+            <option value="default">Par défaut</option>
+            <option value="enabled">Activé</option>
+        </select>
+        <label for="autoValiderSelector">Auto-validé</label>
     </div>
 </div>
 
