@@ -1,9 +1,9 @@
 <div align="center">
 
 # VoirAnime DarkMod
-**Thème sombre et bien plus pour tout le site [VoirAnime](https://voiranime.com/).**
+**Thème sombre et bien plus pour tout le site [VoirAnime](https://voiranime.tv/).**
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue)]()
+[![Version](https://img.shields.io/badge/version-2.1.1-blue)]()
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)
 [![Firefox Add-ons](https://img.shields.io/amo/v/voiranime-darkmod)](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)
 <br>
@@ -13,7 +13,7 @@
 [![Image Promotionnelle](img/ImagePromotionnelle.webp)]()
 </div>
 
-**VoirAnime DarkMod** est une extension pour [VoirAnime](https://voiranime.com/) permettant de personnaliser l’apparence du site (thème sombre/clair, modules CSS modulaires, etc.).
+**VoirAnime DarkMod** est une extension pour [VoirAnime](https://voiranime.tv/) permettant de personnaliser l’apparence du site (thème sombre/clair, modules CSS modulaires, etc.).
 
 ## 🚀 Nouveautés de la v2.0.0
 
@@ -92,10 +92,12 @@ Aussi disponible sur Android via l'aplication **Kiwi Browser** ou **Firefox**.
 Les contributions sont les bienvenues !
 
 1. Forkez le dépôt.
-2. Créez une branche (`git checkout -b feat/ma-fonctionnalité`).
+2. Créez une branche depuis `dev` (`git checkout -b feat/ma-fonctionnalité dev`).
 3. Committez vos modifications (`git commit -m 'feat: nouvelle fonctionnalité'`).
 4. Poussez vers la branche (`git push origin feature/ma-fonctionnalité`).
-5. Ouvrez une pull request.
+5. Ouvrez une pull request **vers `dev`** (et non `main`).
+
+> ⚠️ Ne jamais ouvrir de pull request directement vers `main`.
 
 Merci de respecter le [Code de conduite](CODE_OF_CONDUCT.md).
 
@@ -105,7 +107,7 @@ Ce projet est sous licence **GNU GPL v3**. Pour plus de détails, consultez [GPL
 
 ## 🙏 Remerciements
 
-* **[VoirAnime](https://voiranime.com/)** pour son contenu.
+* **[VoirAnime](https://voiranime.tv/)** pour son contenu.
 * **[Oriloo](https://github.com/Oriloo)** pour le développement initial.
 
 © 2023-2025 **Oriloo** — Projet non affilié à VoirAnime.
