@@ -92,10 +92,12 @@ Aussi disponible sur Android via l'aplication **Kiwi Browser** ou **Firefox**.
 Les contributions sont les bienvenues !
 
 1. Forkez le dépôt.
-2. Créez une branche (`git checkout -b feat/ma-fonctionnalité`).
+2. Créez une branche depuis `dev` (`git checkout -b feat/ma-fonctionnalité dev`).
 3. Committez vos modifications (`git commit -m 'feat: nouvelle fonctionnalité'`).
 4. Poussez vers la branche (`git push origin feature/ma-fonctionnalité`).
-5. Ouvrez une pull request.
+5. Ouvrez une pull request **vers `dev`** (et non `main`).
+
+> ⚠️ Ne jamais ouvrir de pull request directement vers `main`.
 
 Merci de respecter le [Code de conduite](CODE_OF_CONDUCT.md).
 
