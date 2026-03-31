@@ -216,7 +216,7 @@
         const selectElement = document.querySelector('select.selectpicker.host-select');
         console.log("[VoirAnime Auto] Élément select trouvé:", selectElement);
 
-        const isEpisodePage = window.location.href.includes('voiranime.tv/') && selectElement;
+        const isEpisodePage = window.location.href.includes('voir-anime.to/') && selectElement;
 
         if (!isEpisodePage) {
             console.log("[VoirAnime Auto] Pas une page d'épisode, arrêt.");

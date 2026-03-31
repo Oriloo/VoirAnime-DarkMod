@@ -1,9 +1,9 @@
 <div align="center">
 
 # VoirAnime DarkMod
-**Thème sombre et bien plus pour tout le site [VoirAnime](https://voiranime.tv/).**
+**Thème sombre et bien plus pour tout le site [VoirAnime](https://voir-anime.to/).**
 
-[![Version](https://img.shields.io/badge/version-2.1.1-blue)]()
+[![Version](https://img.shields.io/badge/version-2.1.2-blue)]()
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)
 [![Firefox Add-ons](https://img.shields.io/amo/v/voiranime-darkmod)](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)
 <br>
@@ -13,7 +13,7 @@
 [![Image Promotionnelle](img/ImagePromotionnelle.webp)]()
 </div>
 
-**VoirAnime DarkMod** est une extension pour [VoirAnime](https://voiranime.tv/) permettant de personnaliser l’apparence du site (thème sombre/clair, modules CSS modulaires, etc.).
+**VoirAnime DarkMod** est une extension pour [VoirAnime](https://voir-anime.to/) permettant de personnaliser l’apparence du site (thème sombre/clair, modules CSS modulaires, etc.).
 
 ## 🚀 Nouveautés de la v2.0.0
 
@@ -107,7 +107,7 @@ Ce projet est sous licence **GNU GPL v3**. Pour plus de détails, consultez [GPL
 
 ## 🙏 Remerciements
 
-* **[VoirAnime](https://voiranime.tv/)** pour son contenu.
+* **[VoirAnime](https://voir-anime.to/)** pour son contenu.
 * **[Oriloo](https://github.com/Oriloo)** pour le développement initial.
 
 © 2023-2025 **Oriloo** — Projet non affilié à VoirAnime.
