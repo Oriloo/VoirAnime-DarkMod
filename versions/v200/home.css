@@ -1,5 +1,81 @@
+.archive .site-content .c-breadcrumb-wrapper {
+    background-image: url("https://i.postimg.cc/MHZtp3Bb/black-bg-search.jpg") !important;
+    background-size: cover;
+    background-position: center;
+    padding: var(--spacing-md) 0;
+
+    .breadcrumb {
+        display: flex;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-xs) var(--spacing-xl);
+        margin: 0;
+        font-size: var(--font-size-sm);
+        color: var(--color-secondary);
+
+        li a {
+            color: var(--color-secondary);
+            &:hover { color: var(--color-brand); }
+        }
+        li:last-child a { color: var(--color-primary); }
+        li + li::before {
+            content: '/';
+            margin-right: var(--spacing-xs);
+            color: var(--color-tertiary);
+        }
+    }
+
+    .c-genres-block {
+        padding: var(--spacing-md) var(--spacing-xl);
+
+        .genres_wrap {
+            .c-blog__heading {
+                h5 {
+                    font-size: var(--font-size-md);
+                    font-weight: var(--font-weight-bold);
+                    color: var(--color-primary);
+                    background-color: var(--color-zone);
+                    display: inline-block;
+                    padding: var(--spacing-xxs) var(--spacing-sm);
+                    border-radius: var(--border-radius-sm);
+                }
+            }
+
+            .btn-genres {
+                color: var(--color-primary);
+            }
+
+            .genres__collapse .row.genres ul {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: var(--spacing-xxs);
+                padding: var(--spacing-sm) 0;
+
+                li {
+                    width: 100%;
+                    padding: 0;
+
+                    a {
+                        display: block;
+                        padding: var(--spacing-xxs) var(--spacing-xs);
+                        color: var(--color-secondary);
+                        font-size: var(--font-size-sm);
+                        border-radius: var(--border-radius-sm);
+                        transition: var(--transition-fast);
+
+                        &:hover {
+                            color: var(--color-primary);
+                            background-color: var(--color-zone-hover);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 .page-template .site-content .main-col-inner,
-.home .site-content .main-col-inner {
+.home .site-content .main-col-inner,
+.archive .site-content .main-col-inner {
     .tab-wrap .c-blog__heading {
         display: flex;
         justify-content: space-between;
