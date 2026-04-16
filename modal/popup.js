@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const versionSelect       = document.getElementById('versionSelector');
     const searchSelectEl      = document.getElementById('searchSelect');
     const searchSelector      = document.getElementById('searchSelector');
+    const genreSelectEl       = document.getElementById('genreSelect');
+    const genreSelector       = document.getElementById('genreSelector');
     const lecteurSelector     = document.getElementById('lecteurSelector');
     const autoValiderSelector = document.getElementById('autoValiderSelector');
 
@@ -13,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             theme: 'dark',
             version: '2',
             search: 'fixe',
+            genre: 'hide',
             autoLecteurEnabled: false,
             lecteurPreferred: 'LECTEUR myTV',
             autoValiderEnabled: false
@@ -22,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             themeSelector.value     = data.theme;
             versionSelect.value     = data.version;
             searchSelector.value    = data.search;
+            genreSelector.value     = data.genre;
 
             // Lecteur : si désactivé → "default", sinon la valeur du lecteur préféré
             lecteurSelector.value = data.autoLecteurEnabled ? data.lecteurPreferred : 'default';
@@ -31,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             updateLabel(data.enabled);
             toggleSearchSelect(data.version);
+            toggleGenreSelect(data.version);
         }
     );
 
@@ -47,10 +52,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const v = versionSelect.value;
         chrome.storage.sync.set({ version: v });
         toggleSearchSelect(v);
+        toggleGenreSelect(data.version);
     });
 
     searchSelector.addEventListener('change', () => {
         chrome.storage.sync.set({ search: searchSelector.value });
+    });
+
+    genreSelector.addEventListener('change', () => {
+        chrome.storage.sync.set({ genre: genreSelector.value });
     });
 
     lecteurSelector.addEventListener('change', () => {
@@ -77,5 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleSearchSelect(version) {
         searchSelectEl.style.display = version === '2' ? 'block' : 'none';
+    }
+
+    function toggleGenreSelect(version) {
+        genreSelectEl.style.display = version === '2' ? 'block' : 'none';
     }
 });
