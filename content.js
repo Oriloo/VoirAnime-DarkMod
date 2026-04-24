@@ -6,7 +6,8 @@
         v2: {
             main: chrome.runtime.getURL('versions/v200/_build.css'),
             list: chrome.runtime.getURL('versions/v200/liste.css'),
-            hide: chrome.runtime.getURL('versions/v200/hide-search.css')
+            hide: chrome.runtime.getURL('versions/v200/hide-search.css'),
+            genre: chrome.runtime.getURL('versions/v200/header-genre.css')
         },
         v1: chrome.runtime.getURL('versions/v120/_build.css'),
         listPattern: /^https?:\/\/[^/]+\/liste-danimes\/.*$/
@@ -17,6 +18,7 @@
         version: '2',
         theme: 'dark',
         search: 'fixe',
+        genre: 'hide',
         autoLecteurEnabled: false,
         lecteurPreferred: 'LECTEUR myTV',
         autoValiderEnabled: false
@@ -68,6 +70,10 @@
         if (eh) eh.remove();
         if (config.search === 'cacher') HEAD.appendChild(createLink(URLS.v2.hide));
 
+        if (config.genre === 'show' && !HEAD.querySelector(`link[href="${URLS.v2.genre}"]`)) {
+            HEAD.appendChild(createLink(URLS.v2.genre));
+        }
+
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };
 
@@ -113,7 +119,7 @@
         });
 
         chrome.storage.onChanged.addListener((changes, area) => {
-            if (area === 'sync' && ['enabled', 'version', 'theme', 'search', 'autoLecteurEnabled', 'lecteurPreferred', 'autoValiderEnabled'].some(k => k in changes)) {
+            if (area === 'sync' && ['enabled', 'version', 'theme', 'search', 'genre', 'autoLecteurEnabled', 'lecteurPreferred', 'autoValiderEnabled'].some(k => k in changes)) {
                 window.location.reload();
             }
         });
