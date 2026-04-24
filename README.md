@@ -3,7 +3,7 @@
 # VoirAnime DarkMod
 **Thème sombre et bien plus pour tout le site [VoirAnime](https://voir-anime.to/).**
 
-[![Version](https://img.shields.io/badge/version-v2.1.4-blue)]()
+[![Version](https://img.shields.io/badge/version-v2.1.5-blue)]()
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)
 [![Firefox Add-ons](https://img.shields.io/amo/v/voiranime-darkmod)](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)
 <br>

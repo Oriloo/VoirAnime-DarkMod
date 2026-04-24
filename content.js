@@ -4,11 +4,16 @@
 
     const URLS = {
         v2: {
-            main: chrome.runtime.getURL('versions/v200/_build.css'),
+            main: [
+                'variables', 'general', 'main', 'header', 'footer',
+                'content', 'home', 'anime', 'episode', 'pagination',
+                'error404', 'recherche-av'
+            ].map(f => chrome.runtime.getURL(`versions/v200/${f}.css`)),
             list: chrome.runtime.getURL('versions/v200/liste.css'),
-            hide: chrome.runtime.getURL('versions/v200/hide-search.css')
+            hide: chrome.runtime.getURL('versions/v200/hide-search.css'),
+            genre: chrome.runtime.getURL('versions/v200/header-genre.css')
         },
-        v1: chrome.runtime.getURL('versions/v120/_build.css'),
+        v1: chrome.runtime.getURL('versions/v120/main.css'),
         listPattern: /^https?:\/\/[^/]+\/liste-danimes\/.*$/
     };
 
@@ -17,6 +22,7 @@
         version: '2',
         theme: 'dark',
         search: 'fixe',
+        genre: 'hide',
         autoLecteurEnabled: false,
         lecteurPreferred: 'LECTEUR myTV',
         autoValiderEnabled: false
@@ -35,17 +41,11 @@
     };
 
     const injectV2Main = () => {
-        try {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', URLS.v2.main, false);
-            xhr.send();
-            if (xhr.status === 200) {
-                const s = document.createElement('style');
-                s.setAttribute(CUSTOM_ATTR, 'true');
-                s.textContent = xhr.responseText;
-                HEAD.appendChild(s);
+        URLS.v2.main.forEach(href => {
+            if (!HEAD.querySelector(`link[href="${href}"]`)) {
+                HEAD.appendChild(createLink(href));
             }
-        } catch {}
+        });
     };
 
     injectV2Main();
@@ -67,6 +67,10 @@
         const eh = HEAD.querySelector(`link[href="${URLS.v2.hide}"]`);
         if (eh) eh.remove();
         if (config.search === 'cacher') HEAD.appendChild(createLink(URLS.v2.hide));
+
+        if (config.genre === 'show' && !HEAD.querySelector(`link[href="${URLS.v2.genre}"]`)) {
+            HEAD.appendChild(createLink(URLS.v2.genre));
+        }
 
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };
@@ -113,7 +117,7 @@
         });
 
         chrome.storage.onChanged.addListener((changes, area) => {
-            if (area === 'sync' && ['enabled', 'version', 'theme', 'search', 'autoLecteurEnabled', 'lecteurPreferred', 'autoValiderEnabled'].some(k => k in changes)) {
+            if (area === 'sync' && ['enabled', 'version', 'theme', 'search', 'genre', 'autoLecteurEnabled', 'lecteurPreferred', 'autoValiderEnabled'].some(k => k in changes)) {
                 window.location.reload();
             }
         });
