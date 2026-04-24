@@ -14,16 +14,17 @@ header.site-header {
 
             .sub-nav_list.list-inline {
                 position: relative;
-                border-bottom: var(--border-sm);
                 background-color: var(--color-black);
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                padding: 0 var(--spacing-md);
 
                 .menu-item {
                     display: inline-block;
-                    padding: 0 var(--spacing-xxs);
                     z-index: var(--z-index-dropdown);
 
                     a {
-                        padding: var(--spacing-xs) var(--spacing-lg);
+                        padding: var(--spacing-xs);
                         font-weight: var(--font-weight-bold);
                         line-height: var(--line-height-md);
                         font-size: var(--font-size-sm);
@@ -39,6 +40,10 @@ header.site-header {
                     &.active > a { 
                         color: var(--color-brand);
                     }
+                }
+
+                .mobile-icon {
+                    z-index: 500;
                 }
                 
                 .menu-item-has-children {
@@ -63,11 +68,23 @@ header.site-header {
 
                     &:hover,&.active {
                         .sub-menu {
-                            display: block;
+                            display: grid;
+                            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                             position: absolute;
                             width: 100%;
                             left: 0;
                             background-color: var(--color-bg-light);
+                            padding: 0 var(--spacing-md);
+
+                            li {
+                                padding: 0;
+                                a { padding: var(--spacing-xs); }
+
+                                &:hover {
+                                    background-color: var(--color-zone-hover);
+                                    transition: var(--transition-fast);
+                                }
+                            }
                         }
                     }
                 }
@@ -78,8 +95,8 @@ header.site-header {
 
                     .mobile-icon {
                         position: absolute;
-                        top: 0px;
-                        right: 0px;
+                        top: 0;
+                        right: 0;
                         width: 40px;
                         height: 40px;
                         display: flex;
@@ -116,10 +133,7 @@ header.site-header {
                         }
                     }
                 }
-
             }
         }
-
     }
-
 }
