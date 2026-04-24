@@ -1,12 +1,15 @@
 header.site-header {
 
+    .clone-header {
+        display: none !important;
+    }
+
     .c-sub-header-nav {
 
         display: block !important;
 
         .container {
             max-width: var(--breakpoint-xxl);
-            padding: 0 var(--spacing-md);
             margin: auto;
 
             .sub-nav_list.list-inline {
