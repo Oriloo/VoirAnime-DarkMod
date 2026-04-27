@@ -1,3 +1,5 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css";
 @import "../v200/variables.css";
 
 /* éléments suprimer */
@@ -19,8 +21,27 @@ body {
 span, a, a.open-search-main-menu:hover i.icon.ion-ios-search, .h4 {
   color: var(--color-primary) !important;
 }
-.btn-link, i.icon.ion-ios-search, .asp_res_url {
+.btn-link, .asp_res_url {
   color: var(--color-black) !important;
+}
+.open-search-main-menu {
+  background-color: var(--color-bg-light) !important;
+}
+.open-search-main-menu:hover {
+  background-color: var(--color-zone-hover) !important;
+}
+
+i.icon.ion-ios-search {
+  display: inline-block !important;
+  width: 22px !important;
+  height: 22px !important;
+  vertical-align: middle !important;
+  background-color: var(--color-primary) !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z' fill='none' stroke='black' stroke-miterlimit='10' stroke-width='32'/><path stroke-linecap='round' stroke-miterlimit='10' stroke-width='32' fill='none' stroke='black' d='M338.29 338.29 448 448'/></svg>") no-repeat center / contain !important;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z' fill='none' stroke='black' stroke-miterlimit='10' stroke-width='32'/><path stroke-linecap='round' stroke-miterlimit='10' stroke-width='32' fill='none' stroke='black' d='M338.29 338.29 448 448'/></svg>") no-repeat center / contain !important;
+}
+i.icon.ion-ios-search::before {
+  content: none !important;
 }
 .ratings_stars {
   color: var(--color-brand) !important;
@@ -175,15 +196,57 @@ span, a, a.open-search-main-menu:hover i.icon.ion-ios-search, .h4 {
 }
 .c-search-header__wrapper {
   background-color: var(--color-black) !important;
-  background-image: none !important;
   display: flex !important;
   justify-content: center !important;
   label, button {
     color: var(--color-primary) !important;
   }
 }
+html:not(.theme-light) .c-search-header__wrapper {
+  background-image: url("https://i.postimg.cc/MHZtp3Bb/black-bg-search.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+.c-search-header__wrapper .search-form .search-field {
+  background-color: var(--color-bg-light) !important;
+  color: var(--color-primary) !important;
+  border-color: var(--color-border) !important;
+}
+.c-search-header__wrapper .search-form .search-field::placeholder {
+  color: var(--color-tertiary) !important;
+}
+.c-search-header__wrapper .search-form {
+  position: relative !important;
+}
+.c-search-header__wrapper .search-form::after {
+  content: "" !important;
+  position: absolute !important;
+  right: 30px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 22px !important;
+  height: 22px !important;
+  background-color: var(--color-primary) !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z' fill='none' stroke='black' stroke-miterlimit='10' stroke-width='32'/><path stroke-linecap='round' stroke-miterlimit='10' stroke-width='32' fill='none' stroke='black' d='M338.29 338.29 448 448'/></svg>") no-repeat center / contain !important;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64z' fill='none' stroke='black' stroke-miterlimit='10' stroke-width='32'/><path stroke-linecap='round' stroke-miterlimit='10' stroke-width='32' fill='none' stroke='black' d='M338.29 338.29 448 448'/></svg>") no-repeat center / contain !important;
+  pointer-events: none !important;
+}
+.c-search-header__wrapper .search-form .search-submit {
+  background-color: var(--color-bg-light) !important;
+  color: transparent !important;
+  border-color: var(--color-border) !important;
+}
 
 /* page anime */
+.wp-manga .c-btn.c-btn_style-1 {
+  background-color: var(--color-bg-light) !important;
+  color: var(--color-primary) !important;
+  border-color: var(--color-border) !important;
+}
+.wp-manga .c-btn.c-btn_style-1:hover {
+  background-color: var(--color-zone) !important;
+}
+
 .wp-manga {
   .profile-manga {
     background-color: var(--color-black) !important;
@@ -223,6 +286,109 @@ span, a, a.open-search-main-menu:hover i.icon.ion-ios-search, .h4 {
         color: var(--color-border) !important;
       }
     }
+  }
+}
+
+/* image de fond sombre - uniquement en thème sombre */
+html:not(.theme-light) .archive .c-breadcrumb-wrapper,
+html:not(.theme-light) .wp-manga .profile-manga {
+  background-image: url("https://i.postimg.cc/MHZtp3Bb/black-bg-search.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* pages archive (anime-genre, anime-release) */
+.archive .c-breadcrumb-wrapper > .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+.archive .breadcrumb {
+  background-color: transparent !important;
+}
+.archive .breadcrumb a {
+  color: var(--color-secondary) !important;
+}
+.archive .breadcrumb a:hover {
+  color: var(--color-brand) !important;
+}
+.archive .breadcrumb li:last-child a {
+  color: var(--color-primary) !important;
+}
+.archive .genres_wrap .c-blog__heading {
+  background: var(--color-bg-light) !important;
+}
+.archive .genres_wrap .c-blog__heading h5 {
+  color: var(--color-primary) !important;
+}
+.archive .genres_wrap .genres__collapse .row.genres ul li a {
+  color: var(--color-secondary) !important;
+}
+.archive .genres_wrap .genres__collapse .row.genres ul li a:hover {
+  color: var(--color-primary) !important;
+}
+
+/* responsivité - menu mobile */
+@media (max-width: 992px) {
+  .site-header .main-navigation .main-menu {
+    display: none !important;
+  }
+  .site-header .c-togle__menu .menu_icon__open span {
+    background-color: var(--color-primary) !important;
+  }
+  .mobile-menu {
+    background-color: var(--color-bg) !important;
+    border-color: var(--color-border) !important;
+    z-index: 999 !important;
+  }
+  .mobile-menu .off-menu {
+    background-color: var(--color-bg) !important;
+  }
+  .mobile-menu .nav.navbar-nav.main-navbar .menu-item a {
+    color: var(--color-primary) !important;
+    background-color: transparent !important;
+  }
+  .mobile-menu .nav.navbar-nav.main-navbar .menu-item a:hover {
+    color: var(--color-brand) !important;
+  }
+  .mobile-menu .close-nav .menu_icon__close span {
+    background-color: var(--color-primary) !important;
+  }
+}
+
+/* responsivité - contenu principal (override de la marge négative desktop) */
+@media (max-width: 1200px) {
+  .content-area .container .row .main-col .main-col-inner,
+  .content-area .container .row .col-md-8 .main-col-inner,
+  .content-area .container .row .col-sm-8 .main-col-inner,
+  .content-area .container .row .main-col .c-page,
+  .content-area .container .row .col-md-8 .c-page,
+  .content-area .container .row .col-sm-8 .c-page {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* responsivité - section archive */
+@media (max-width: 768px) {
+  .archive .c-breadcrumb-wrapper {
+    padding: 10px 0 !important;
+  }
+  .archive .c-breadcrumb-wrapper > .container {
+    max-width: 100% !important;
+    padding: 0 15px !important;
+  }
+  .archive .breadcrumb {
+    padding: 5px 0 !important;
+    font-size: 13px !important;
+  }
+  .archive .genres_wrap .c-blog__heading {
+    margin: 5px 0 !important;
+  }
+  .archive .genres_wrap .genres__collapse .row.genres ul li {
+    padding: 4px !important;
+  }
+  .archive .genres_wrap .genres__collapse .row.genres ul li a {
+    font-size: 13px !important;
   }
 }
 
