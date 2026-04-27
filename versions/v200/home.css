@@ -1,7 +1,10 @@
-.archive .site-content .c-breadcrumb-wrapper {
+html:not(.theme-light) .archive .site-content .c-breadcrumb-wrapper {
     background-image: url("https://i.postimg.cc/MHZtp3Bb/black-bg-search.jpg") !important;
     background-size: cover;
     background-position: center;
+}
+
+.archive .site-content .c-breadcrumb-wrapper {
     padding: var(--spacing-md) 0;
 
     .breadcrumb {
