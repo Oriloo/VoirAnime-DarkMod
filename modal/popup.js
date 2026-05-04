@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const v = versionSelect.value;
         chrome.storage.sync.set({ version: v });
         toggleSearchSelect(v);
-        toggleGenreSelect(data.version);
+        toggleGenreSelect(v);
     });
 
     searchSelector.addEventListener('change', () => {
