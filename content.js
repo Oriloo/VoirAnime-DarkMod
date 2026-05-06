@@ -25,8 +25,7 @@
         genre: 'hide',
         autoLecteurEnabled: false,
         lecteurPreferred: 'LECTEUR myTV',
-        autoValiderEnabled: false,
-        vfVostfrSwitchEnabled: true
+        autoValiderEnabled: false
     };
 
     const createLink = href => {
@@ -118,7 +117,7 @@
         });
 
         chrome.storage.onChanged.addListener((changes, area) => {
-            if (area === 'sync' && ['enabled', 'version', 'theme', 'search', 'genre', 'autoLecteurEnabled', 'lecteurPreferred', 'autoValiderEnabled', 'vfVostfrSwitchEnabled'].some(k => k in changes)) {
+            if (area === 'sync' && ['enabled', 'version', 'theme', 'search', 'genre', 'autoLecteurEnabled', 'lecteurPreferred', 'autoValiderEnabled'].some(k => k in changes)) {
                 window.location.reload();
             }
         });
@@ -339,11 +338,6 @@
     };
 
     const runVfVostfrSwitch = () => {
-        if (!config.vfVostfrSwitchEnabled) {
-            console.log("[VoirAnime VF/VOSTFR] Désactivé ⏸️");
-            return;
-        }
-
         const alt = computeAlternate(location.href);
         if (!alt) return;
 
@@ -376,16 +370,8 @@
     };
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            chrome.storage.sync.get(config, (data) => {
-                config = { ...config, ...data };
-                runVfVostfrSwitch();
-            });
-        });
+        document.addEventListener('DOMContentLoaded', runVfVostfrSwitch);
     } else {
-        chrome.storage.sync.get(config, (data) => {
-            config = { ...config, ...data };
-            runVfVostfrSwitch();
-        });
+        runVfVostfrSwitch();
     }
 })();

@@ -6,9 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchSelector      = document.getElementById('searchSelector');
     const genreSelectEl       = document.getElementById('genreSelect');
     const genreSelector       = document.getElementById('genreSelector');
-    const lecteurSelector       = document.getElementById('lecteurSelector');
-    const autoValiderSelector   = document.getElementById('autoValiderSelector');
-    const vfVostfrSwitchSelector = document.getElementById('vfVostfrSwitchSelector');
+    const lecteurSelector     = document.getElementById('lecteurSelector');
+    const autoValiderSelector = document.getElementById('autoValiderSelector');
 
     chrome.storage.sync.get(
         {
@@ -19,8 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             genre: 'hide',
             autoLecteurEnabled: false,
             lecteurPreferred: 'LECTEUR myTV',
-            autoValiderEnabled: false,
-            vfVostfrSwitchEnabled: true
+            autoValiderEnabled: false
         },
         data => {
             toggle.checked          = data.enabled;
@@ -34,9 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Auto-validé : si désactivé → "default", sinon "enabled"
             autoValiderSelector.value = data.autoValiderEnabled ? 'enabled' : 'default';
-
-            // Switch VF/VOSTFR : activé par défaut
-            vfVostfrSwitchSelector.value = data.vfVostfrSwitchEnabled ? 'enabled' : 'disabled';
 
             updateLabel(data.enabled);
             toggleSearchSelect(data.version);
@@ -83,11 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
     autoValiderSelector.addEventListener('change', () => {
         const isEnabled = autoValiderSelector.value === 'enabled';
         chrome.storage.sync.set({ autoValiderEnabled: isEnabled });
-    });
-
-    vfVostfrSwitchSelector.addEventListener('change', () => {
-        const isEnabled = vfVostfrSwitchSelector.value === 'enabled';
-        chrome.storage.sync.set({ vfVostfrSwitchEnabled: isEnabled });
     });
 
     function updateLabel(on) {
