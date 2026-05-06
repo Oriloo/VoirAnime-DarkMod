@@ -25,7 +25,8 @@
     "default_title": "VoirAnime DarkMod"
   },
   "host_permissions": [
-    "*://*.voir-anime.to/*"
+    "*://*.voir-anime.to/*",
+    "*://myanimelist.net/*"
   ],
   "web_accessible_resources": [
     {
@@ -43,8 +44,11 @@
       "run_at": "document_start"
     }
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_security_policy": {
-    "extension_pages": "default-src 'self'; style-src 'self';"
+    "extension_pages": "default-src 'self'; style-src 'self'; connect-src 'self' https://myanimelist.net;"
   },
   "browser_specific_settings": {
     "gecko": {
