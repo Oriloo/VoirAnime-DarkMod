@@ -40,7 +40,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.voir-anime.to/*"],
-      "js": ["content.js"],
+      "js": ["content.js", "scripts/characters.js"],
       "run_at": "document_start"
     }
   ],
