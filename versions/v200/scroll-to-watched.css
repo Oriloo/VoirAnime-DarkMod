@@ -1,0 +1,59 @@
+.scroll-to-watched-container {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    z-index: var(--z-index-tooltip);
+
+    .scroll-to-watched-up {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(8px);
+        transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    &.show-up .scroll-to-watched-up {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+}
+
+.scroll-to-watched-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--border-radius-round);
+    border: var(--border-sm);
+    background-color: var(--color-zone-click);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-md);
+
+    &:hover {
+        background-color: var(--color-zone-hover);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    svg {
+        display: block;
+    }
+}
+
+.wp-manga-chapter.scroll-to-watched-flash {
+    animation: scrollToWatchedFlash 1.5s ease-out;
+}
+
+@keyframes scrollToWatchedFlash {
+    0% { background-color: var(--color-brand); }
+    100% { background-color: transparent; }
+}

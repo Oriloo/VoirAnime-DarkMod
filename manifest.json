@@ -39,7 +39,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.voir-anime.to/*"],
-      "js": ["content.js"],
+      "js": ["content.js", "scripts/scroll-to-watched.js"],
       "run_at": "document_start"
     }
   ],
