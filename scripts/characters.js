@@ -168,6 +168,35 @@
         });
     });
 
+    const fetchNijihubMappingViaBackground = (slug) => new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ type: 'fetchNijihubMapping', slug }, (response) => {
+            if (chrome.runtime.lastError) {
+                reject(new Error(chrome.runtime.lastError.message));
+                return;
+            }
+            if (!response || !response.ok) {
+                reject(new Error(response?.error || 'unknown background error'));
+                return;
+            }
+            resolve(response.data);
+        });
+    });
+
+    const searchMalIdViaNijihub = async (slug) => {
+        try {
+            const data = await fetchNijihubMappingViaBackground(slug);
+            const malId = data?.data?.[0]?.mal_id;
+            if (malId) {
+                const verified = data.data[0].verified;
+                console.log(`[VoirAnime Characters] mal_id ${malId} trouvé via nijihub (verified=${verified})`);
+                return malId;
+            }
+        } catch (err) {
+            console.log(`[VoirAnime Characters] nijihub indisponible: ${err.message}`);
+        }
+        return null;
+    };
+
     const searchMalIdViaJikan = async (queries) => {
         for (const query of queries) {
             const res = await fetch(`${JIKAN_BASE}/anime?q=${encodeURIComponent(query)}&limit=1`);
@@ -175,15 +204,22 @@
             const data = await res.json();
             const malId = data.data?.[0]?.mal_id;
             if (malId) {
-                console.log(`[VoirAnime Characters] mal_id ${malId} trouvé via "${query}"`);
+                console.log(`[VoirAnime Characters] mal_id ${malId} trouvé via Jikan "${query}"`);
                 return malId;
             }
         }
         throw new Error('No MAL ID found for any query');
     };
 
-    const fetchCharactersFromMal = async (queries) => {
-        const malId = await searchMalIdViaJikan(queries);
+    const resolveMalId = async (slug, queries) => {
+        const fromNijihub = await searchMalIdViaNijihub(slug);
+        if (fromNijihub) return fromNijihub;
+        console.log(`[VoirAnime Characters] fallback Jikan...`);
+        return searchMalIdViaJikan(queries);
+    };
+
+    const fetchCharactersFromMal = async (slug, queries) => {
+        const malId = await resolveMalId(slug, queries);
         const html = await fetchMalAnimePageViaBackground(malId);
         return { malId, characters: parseCharactersFromMalHtml(html) };
     };
@@ -206,15 +242,9 @@
             }
 
             const queries = getAnimeQueries().map(cleanQuery).filter(Boolean);
-            if (queries.length === 0) {
-                console.log("[VoirAnime Characters] Aucun titre exploitable, abandon");
-                section.remove();
-                return;
-            }
+            console.log(`[VoirAnime Characters] Résolution du mal_id pour slug="${slug}", fallback queries:`, queries);
 
-            console.log(`[VoirAnime Characters] Recherche Jikan, queries (priorité):`, queries);
-
-            fetchCharactersFromMal(queries)
+            fetchCharactersFromMal(slug, queries)
                 .then(({ malId, characters }) => {
                     console.log(`[VoirAnime Characters] ${characters.length} personnage(s) récupéré(s) (MAL ID: ${malId})`);
                     chrome.storage.local.set({

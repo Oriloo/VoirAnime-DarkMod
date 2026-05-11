@@ -26,7 +26,8 @@
   },
   "host_permissions": [
     "*://*.voir-anime.to/*",
-    "*://myanimelist.net/*"
+    "*://myanimelist.net/*",
+    "*://api.nijihub.com/*"
   ],
   "web_accessible_resources": [
     {
@@ -48,7 +49,7 @@
     "service_worker": "background.js"
   },
   "content_security_policy": {
-    "extension_pages": "default-src 'self'; style-src 'self'; connect-src 'self' https://myanimelist.net;"
+    "extension_pages": "default-src 'self'; style-src 'self'; connect-src 'self' https://myanimelist.net https://api.nijihub.com;"
   },
   "browser_specific_settings": {
     "gecko": {
