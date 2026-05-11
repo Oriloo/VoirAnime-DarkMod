@@ -39,7 +39,12 @@
   "content_scripts": [
     {
       "matches": ["*://*.voir-anime.to/*"],
-      "js": ["content.js"],
+      "js": [
+        "content.js",
+        "scripts/remove-image-sizes.js",
+        "scripts/auto-select.js",
+        "scripts/vf-vostfr-switch.js"
+      ],
       "run_at": "document_start"
     }
   ],
