@@ -45,17 +45,50 @@
         });
     };
 
+    const disableLink = (el) => {
+        el.disabled = true;
+        el.media = 'not all';
+    };
+
+    const enableLink = (el) => {
+        el.disabled = false;
+        el.media = 'all';
+    };
+
+    const observerV2 = new MutationObserver(records => {
+        records.forEach(rec => rec.addedNodes.forEach(n => {
+            if (n.nodeType === 1) {
+                if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) disableLink(n);
+                else if (n.matches('style:not([data-custom-style])')) n.remove();
+            }
+        }));
+    });
+
+    const reenableDisabledOriginals = () => {
+        HEAD.querySelectorAll('link[rel="stylesheet"]').forEach(el => {
+            if (!el.hasAttribute(CUSTOM_ATTR) && (el.disabled || el.media === 'not all')) {
+                enableLink(el);
+            }
+        });
+    };
+
+    // Attache l'observer SYNCHRONOUSLY au document_start (avant tout async).
+    // Comme ça les <link>/<style> natifs ajoutés par le parser HTML sont
+    // désactivés à la volée et n'ont pas le temps de s'appliquer.
+    // On part du principe que v2 est actif (défaut). Si la config dit v1 ou
+    // disabled, on détache l'observer plus tard et on réactive les liens.
     injectV2Main();
     HEAD.querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
         if (!el.hasAttribute(CUSTOM_ATTR)) {
-            if (el.tagName === 'LINK') el.disabled = true;
+            if (el.tagName === 'LINK') disableLink(el);
             else el.remove();
         }
     });
+    observerV2.observe(HEAD, { childList: true, subtree: true });
 
     const applyV2 = () => {
         HEAD.querySelectorAll(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
-            .forEach(el => el.tagName === 'LINK' ? el.disabled = true : el.remove());
+            .forEach(el => el.tagName === 'LINK' ? disableLink(el) : el.remove());
 
         if (URLS.listPattern.test(location.href) && !HEAD.querySelector(`link[href="${URLS.v2.list}"]`)) {
             HEAD.appendChild(createLink(URLS.v2.list));
@@ -79,28 +112,22 @@
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };
 
-    const observerV2 = new MutationObserver(records => {
-        records.forEach(rec => rec.addedNodes.forEach(n => {
-            if (n.nodeType === 1) {
-                if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) n.disabled = true;
-                else if (n.matches('style:not([data-custom-style])')) n.remove();
-            }
-        }));
-    });
-
     function init() {
         chrome.storage.sync.get(config, data => {
             config = data;
             if (!config.enabled) {
+                observerV2.disconnect();
                 removeInjected();
+                reenableDisabledOriginals();
                 return;
             }
 
             if (config.version === '2') {
                 applyV2();
-                observerV2.observe(HEAD, { childList: true, subtree: true });
             } else {
+                observerV2.disconnect();
                 removeInjected();
+                reenableDisabledOriginals();
                 applyV1();
             }
         });
