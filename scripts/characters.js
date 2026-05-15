@@ -183,18 +183,12 @@
     });
 
     const searchMalIdViaNijihub = async (slug) => {
-        try {
-            const data = await fetchNijihubMappingViaBackground(slug);
-            const malId = data?.data?.[0]?.mal_id;
-            if (malId) {
-                const verified = data.data[0].verified;
-                console.log(`[VoirAnime Characters] mal_id ${malId} trouvé via nijihub (verified=${verified})`);
-                return malId;
-            }
-        } catch (err) {
-            console.log(`[VoirAnime Characters] nijihub indisponible: ${err.message}`);
+        const data = await fetchNijihubMappingViaBackground(slug);
+        if (!data || !Array.isArray(data.data) || data.count === 0) {
+            return { found: false };
         }
-        return null;
+        const entry = data.data[0];
+        return { found: true, malId: entry.mal_id, verified: entry.verified };
     };
 
     const searchMalIdViaJikan = async (queries) => {
@@ -212,14 +206,26 @@
     };
 
     const resolveMalId = async (slug, queries) => {
-        const fromNijihub = await searchMalIdViaNijihub(slug);
-        if (fromNijihub) return fromNijihub;
-        console.log(`[VoirAnime Characters] fallback Jikan...`);
+        try {
+            const result = await searchMalIdViaNijihub(slug);
+            if (result.found) {
+                if (result.malId) {
+                    console.log(`[VoirAnime Characters] mal_id ${result.malId} via nijihub (verified=${result.verified})`);
+                    return result.malId;
+                }
+                console.log(`[VoirAnime Characters] anime sans page MAL (mal_id: null), pas de fallback Jikan`);
+                return null;
+            }
+            console.log(`[VoirAnime Characters] anime non mappé sur nijihub, fallback Jikan...`);
+        } catch (err) {
+            console.log(`[VoirAnime Characters] nijihub indisponible (${err.message}), fallback Jikan...`);
+        }
         return searchMalIdViaJikan(queries);
     };
 
     const fetchCharactersFromMal = async (slug, queries) => {
         const malId = await resolveMalId(slug, queries);
+        if (!malId) return { malId: null, characters: [] };
         const html = await fetchMalAnimePageViaBackground(malId);
         return { malId, characters: parseCharactersFromMalHtml(html) };
     };
@@ -237,6 +243,10 @@
             const cached = data[cacheKey];
             if (cached && Date.now() - cached.timestamp < CHARACTERS_CACHE_TTL) {
                 console.log(`[VoirAnime Characters] Résultat en cache pour ${slug}`);
+                if (!cached.malId) {
+                    section.remove();
+                    return;
+                }
                 renderCharacters(section, cached.characters);
                 return;
             }
@@ -246,6 +256,14 @@
 
             fetchCharactersFromMal(slug, queries)
                 .then(({ malId, characters }) => {
+                    if (!malId) {
+                        console.log(`[VoirAnime Characters] Pas de page MAL pour cet anime, section supprimée`);
+                        chrome.storage.local.set({
+                            [cacheKey]: { characters: [], malId: null, timestamp: Date.now() }
+                        });
+                        section.remove();
+                        return;
+                    }
                     console.log(`[VoirAnime Characters] ${characters.length} personnage(s) récupéré(s) (MAL ID: ${malId})`);
                     chrome.storage.local.set({
                         [cacheKey]: { characters, malId, timestamp: Date.now() }
