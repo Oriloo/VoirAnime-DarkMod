@@ -25,7 +25,9 @@
     "default_title": "VoirAnime DarkMod"
   },
   "host_permissions": [
-    "*://*.voir-anime.to/*"
+    "*://*.voir-anime.to/*",
+    "*://myanimelist.net/*",
+    "*://api.nijihub.com/*"
   ],
   "web_accessible_resources": [
     {
@@ -39,12 +41,22 @@
   "content_scripts": [
     {
       "matches": ["*://*.voir-anime.to/*"],
-      "js": ["content.js"],
+      "js": [
+        "content.js",
+        "scripts/remove-image-sizes.js",
+        "scripts/auto-select.js",
+        "scripts/vf-vostfr-switch.js",
+        "scripts/characters.js",
+        "scripts/scroll-to-watched.js
+      ],
       "run_at": "document_start"
     }
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_security_policy": {
-    "extension_pages": "default-src 'self'; style-src 'self';"
+    "extension_pages": "default-src 'self'; style-src 'self'; connect-src 'self' https://myanimelist.net https://api.nijihub.com;"
   },
   "browser_specific_settings": {
     "gecko": {

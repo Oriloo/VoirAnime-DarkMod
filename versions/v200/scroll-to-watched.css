@@ -1,0 +1,126 @@
+.scroll-to-watched-container {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    z-index: var(--z-index-tooltip);
+
+    .scroll-to-watched-up {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(8px);
+        transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    &.show-up .scroll-to-watched-up {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .scroll-to-watched-info-popup {
+        position: absolute;
+        right: calc(100% + var(--spacing-xs));
+        bottom: 0;
+        width: 280px;
+        background-color: var(--color-zone-click);
+        border: var(--border-sm);
+        border-radius: var(--border-radius-md);
+        padding: var(--spacing-md);
+        box-shadow: var(--shadow-lg);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(8px);
+        transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+        color: var(--color-primary);
+        pointer-events: none;
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        li {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            line-height: var(--line-height-sm);
+        }
+
+        li svg {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            color: var(--color-primary);
+        }
+
+        li span {
+            flex: 1;
+            min-width: 0;
+        }
+
+        li span sup {
+            font-size: 0.75em;
+        }
+    }
+
+    &.show-info .scroll-to-watched-info-popup {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+        pointer-events: auto;
+    }
+
+    @media (max-width: 576px) {
+        .scroll-to-watched-info-popup {
+            right: 0;
+            bottom: calc(100% + var(--spacing-xs));
+            width: min(280px, calc(100vw - var(--spacing-lg) * 2));
+        }
+    }
+}
+
+.scroll-to-watched-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--border-radius-round);
+    border: var(--border-sm);
+    background-color: var(--color-zone-click);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-md);
+
+    &:hover {
+        background-color: var(--color-zone-hover);
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    svg {
+        display: block;
+    }
+}
+
+.wp-manga-chapter.scroll-to-watched-flash {
+    animation: scrollToWatchedFlash 1.5s ease-out;
+}
+
+@keyframes scrollToWatchedFlash {
+    0% { background-color: var(--color-brand); }
+    100% { background-color: transparent; }
+}
