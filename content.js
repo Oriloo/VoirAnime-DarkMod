@@ -22,10 +22,7 @@
         version: '2',
         theme: 'dark',
         search: 'fixe',
-        genre: 'hide',
-        autoLecteurEnabled: false,
-        lecteurPreferred: 'LECTEUR myTV',
-        autoValiderEnabled: false
+        genre: 'hide'
     };
 
     const createLink = href => {
@@ -106,14 +103,6 @@
                 removeInjected();
                 applyV1();
             }
-
-            // Attendre que le DOM soit chargé avant de lancer l'auto-sélection
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', runAutoSelect);
-            } else {
-                // DOM déjà chargé
-                runAutoSelect();
-            }
         });
 
         chrome.storage.onChanged.addListener((changes, area) => {
@@ -124,140 +113,4 @@
     }
 
     init();
-
-    // Fonction pour supprimer les attributs sizes des images
-    const removeImageSizes = () => {
-        document.querySelectorAll('img[sizes]').forEach(img => img.removeAttribute('sizes'));
-    };
-
-    const imageSizesObserver = new MutationObserver(records => {
-        records.forEach(rec => rec.addedNodes.forEach(n => {
-            if (n.nodeType !== 1) return;
-            if (n.matches('img[sizes]')) n.removeAttribute('sizes');
-            n.querySelectorAll('img[sizes]').forEach(img => img.removeAttribute('sizes'));
-        }));
-    });
-
-    const initImageSizes = () => {
-        removeImageSizes();
-        imageSizesObserver.observe(document.documentElement, { childList: true, subtree: true });
-    };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initImageSizes);
-    } else {
-        initImageSizes();
-    }
-
-    // Fonction pour sélectionner le lecteur préféré
-    const selectPreferredLecteur = (lecteurName) => {
-        if (!config.autoLecteurEnabled) {
-            console.log("[VoirAnime Auto] Auto-sélection du lecteur désactivée ⏸️");
-            return;
-        }
-
-        console.log(`[VoirAnime Auto] Recherche du lecteur: ${lecteurName} 🔍`);
-
-        const select = document.querySelector('select.selectpicker.host-select');
-        if (!select) {
-            console.log("[VoirAnime Auto] Sélecteur non trouvé ❌");
-            return;
-        }
-
-        const option = Array.from(select.options).find(opt => opt.text.includes(lecteurName));
-
-        if (option) {
-            select.value = option.value;
-            select.dispatchEvent(new Event("change", { bubbles: true }));
-            console.log(`[VoirAnime Auto] '${lecteurName}' sélectionné ✅`);
-        } else {
-            console.log(`[VoirAnime Auto] Option '${lecteurName}' non trouvée ❌`);
-        }
-    };
-
-    // Fonction pour attendre et cliquer sur le bouton Valider (observation continue)
-    const waitForValiderButton = () => {
-        if (!config.autoValiderEnabled) {
-            console.log("[VoirAnime Auto] Auto-clic sur 'Valider' désactivé ⏸️");
-            return;
-        }
-
-        console.log("[VoirAnime Auto] Observation continue du bouton 'Valider' activée 👀");
-
-        let currentButton = null;
-        let attrObserver = null;
-
-        // Fonction pour gérer le clic sur le bouton une fois trouvé
-        const handleButton = (button) => {
-            // Si c'est le même bouton déjà géré, ne rien faire
-            if (button === currentButton) return;
-
-            // Nettoyer l'ancien observer d'attribut si existant
-            if (attrObserver) {
-                attrObserver.disconnect();
-                attrObserver = null;
-            }
-
-            currentButton = button;
-            console.log("[VoirAnime Auto] Nouveau bouton 'Valider' détecté 🔍");
-
-            if (!button.disabled) {
-                console.log("[VoirAnime Auto] Bouton 'Valider' déjà actif, on clique dessus ✅");
-                button.click();
-                return;
-            }
-
-            // Observer les changements d'attribut disabled
-            attrObserver = new MutationObserver(() => {
-                if (!button.disabled) {
-                    console.log("[VoirAnime Auto] Bouton 'Valider' activé, on clique dessus ✅");
-                    button.click();
-                }
-            });
-            attrObserver.observe(button, { attributes: true, attributeFilter: ["disabled"] });
-        };
-
-        // Vérifier si un bouton existe déjà
-        const initialButton = document.querySelector('button.btn[type="submit"]');
-        if (initialButton) {
-            handleButton(initialButton);
-        }
-
-        // Observer le DOM en permanence pour détecter les nouveaux boutons
-        const domObserver = new MutationObserver(() => {
-            const btn = document.querySelector('button.btn[type="submit"]');
-            if (btn && btn !== currentButton) {
-                handleButton(btn);
-            }
-        });
-        domObserver.observe(document.body, { childList: true, subtree: true });
-    };
-
-    // Fonction principale pour l'auto-sélection
-    const runAutoSelect = () => {
-        console.log("[VoirAnime Auto] runAutoSelect() appelée");
-        console.log("[VoirAnime Auto] URL actuelle:", window.location.href);
-        console.log("[VoirAnime Auto] Config:", config);
-
-        const selectElement = document.querySelector('select.selectpicker.host-select');
-        console.log("[VoirAnime Auto] Élément select trouvé:", selectElement);
-
-        const isEpisodePage = window.location.href.includes('voir-anime.to/') && selectElement;
-
-        if (!isEpisodePage) {
-            console.log("[VoirAnime Auto] Pas une page d'épisode, arrêt.");
-            return;
-        }
-
-        console.log("[VoirAnime Auto] Page d'épisode détectée 🎬");
-
-        setTimeout(() => {
-            if (config.autoLecteurEnabled && config.lecteurPreferred) {
-                selectPreferredLecteur(config.lecteurPreferred);
-            }
-            if (config.autoValiderEnabled) {
-                waitForValiderButton();
-            }
-        }, 1000);
-    };
 })();
