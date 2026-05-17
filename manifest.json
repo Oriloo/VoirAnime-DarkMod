@@ -46,7 +46,8 @@
         "scripts/remove-image-sizes.js",
         "scripts/auto-select.js",
         "scripts/vf-vostfr-switch.js",
-        "scripts/characters.js"
+        "scripts/characters.js",
+        "scripts/scroll-to-watched.js
       ],
       "run_at": "document_start"
     }

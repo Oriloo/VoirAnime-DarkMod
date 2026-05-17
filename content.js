@@ -7,7 +7,7 @@
             main: [
                 'variables', 'general', 'main', 'header', 'footer',
                 'content', 'home', 'anime', 'episode', 'pagination',
-                'error404', 'recherche-av', 'characters'
+                'error404', 'recherche-av', 'characters', 'scroll-to-watched'
             ].map(f => chrome.runtime.getURL(`versions/v200/${f}.css`)),
             list: chrome.runtime.getURL('versions/v200/liste.css'),
             hide: chrome.runtime.getURL('versions/v200/hide-search.css'),
