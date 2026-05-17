@@ -105,9 +105,16 @@
         });
     };
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runVfVostfrSwitch);
-    } else {
-        runVfVostfrSwitch();
-    }
+    const init = () => {
+        chrome.storage.sync.get({ enabled: true }, (data) => {
+            if (!data.enabled) return;
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', runVfVostfrSwitch);
+            } else {
+                runVfVostfrSwitch();
+            }
+        });
+    };
+
+    init();
 })();

@@ -1,6 +1,8 @@
 (() => {
     const CUSTOM_ATTR = 'data-custom-style';
-    const HEAD = document.head || document.documentElement;
+    // Récupère document.head dynamiquement car il peut être null au document_start.
+    // Fallback sur documentElement uniquement le temps que <head> soit parsé.
+    const getHead = () => document.head || document.documentElement;
 
     const URLS = {
         v2: {
@@ -39,35 +41,47 @@
 
     const injectV2Main = () => {
         URLS.v2.main.forEach(href => {
-            if (!HEAD.querySelector(`link[href="${href}"]`)) {
-                HEAD.appendChild(createLink(href));
+            if (!getHead().querySelector(`link[href="${href}"]`)) {
+                getHead().appendChild(createLink(href));
             }
         });
     };
 
-    const disableLink = (el) => {
-        el.disabled = true;
+    const ORIGINAL_MEDIA_ATTR = 'data-original-media';
+
+    const disableSheetEl = (el) => {
+        if (!el.hasAttribute(ORIGINAL_MEDIA_ATTR)) {
+            el.setAttribute(ORIGINAL_MEDIA_ATTR, el.getAttribute('media') || 'all');
+        }
+        if (el.tagName === 'LINK') el.disabled = true;
         el.media = 'not all';
     };
 
-    const enableLink = (el) => {
-        el.disabled = false;
-        el.media = 'all';
+    // Pour ré-activer un sheet (link ou style), on le clone et on le remplace.
+    // Raison : Chrome a un bug où l'état "disabled" peut rester désynchronisé
+    // entre l'élément DOM et la CSSStyleSheet interne. Cloner force un état
+    // propre, garantissant la ré-application des styles.
+    const enableSheetEl = (el) => {
+        const originalMedia = el.getAttribute(ORIGINAL_MEDIA_ATTR) || 'all';
+        const clone = el.cloneNode(true);
+        if (clone.tagName === 'LINK') clone.disabled = false;
+        clone.media = originalMedia;
+        clone.removeAttribute(ORIGINAL_MEDIA_ATTR);
+        el.replaceWith(clone);
     };
 
     const observerV2 = new MutationObserver(records => {
         records.forEach(rec => rec.addedNodes.forEach(n => {
-            if (n.nodeType === 1) {
-                if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) disableLink(n);
-                else if (n.matches('style:not([data-custom-style])')) n.remove();
-            }
+            if (n.nodeType !== 1) return;
+            if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) disableSheetEl(n);
+            else if (n.matches(`style:not([${CUSTOM_ATTR}])`)) disableSheetEl(n);
         }));
     });
 
     const reenableDisabledOriginals = () => {
-        HEAD.querySelectorAll('link[rel="stylesheet"]').forEach(el => {
-            if (!el.hasAttribute(CUSTOM_ATTR) && (el.disabled || el.media === 'not all')) {
-                enableLink(el);
+        document.querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
+            if (!el.hasAttribute(CUSTOM_ATTR) && (el.disabled || el.media === 'not all' || el.hasAttribute(ORIGINAL_MEDIA_ATTR))) {
+                enableSheetEl(el);
             }
         });
     };
@@ -78,36 +92,35 @@
     // On part du principe que v2 est actif (défaut). Si la config dit v1 ou
     // disabled, on détache l'observer plus tard et on réactive les liens.
     injectV2Main();
-    HEAD.querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
-        if (!el.hasAttribute(CUSTOM_ATTR)) {
-            if (el.tagName === 'LINK') disableLink(el);
-            else el.remove();
-        }
+    getHead().querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
+        if (!el.hasAttribute(CUSTOM_ATTR)) disableSheetEl(el);
     });
-    observerV2.observe(HEAD, { childList: true, subtree: true });
+    // Observer documentElement (root) avec subtree: true pour couvrir
+    // <head> et tout son contenu, même créés après le doc_start.
+    observerV2.observe(document.documentElement, { childList: true, subtree: true });
 
     const applyV2 = () => {
-        HEAD.querySelectorAll(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
-            .forEach(el => el.tagName === 'LINK' ? disableLink(el) : el.remove());
+        getHead().querySelectorAll(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
+            .forEach(disableSheetEl);
 
-        if (URLS.listPattern.test(location.href) && !HEAD.querySelector(`link[href="${URLS.v2.list}"]`)) {
-            HEAD.appendChild(createLink(URLS.v2.list));
+        if (URLS.listPattern.test(location.href) && !getHead().querySelector(`link[href="${URLS.v2.list}"]`)) {
+            getHead().appendChild(createLink(URLS.v2.list));
         }
 
-        const eh = HEAD.querySelector(`link[href="${URLS.v2.hide}"]`);
+        const eh = getHead().querySelector(`link[href="${URLS.v2.hide}"]`);
         if (eh) eh.remove();
-        if (config.search === 'cacher') HEAD.appendChild(createLink(URLS.v2.hide));
+        if (config.search === 'cacher') getHead().appendChild(createLink(URLS.v2.hide));
 
-        if (config.genre === 'show' && !HEAD.querySelector(`link[href="${URLS.v2.genre}"]`)) {
-            HEAD.appendChild(createLink(URLS.v2.genre));
+        if (config.genre === 'show' && !getHead().querySelector(`link[href="${URLS.v2.genre}"]`)) {
+            getHead().appendChild(createLink(URLS.v2.genre));
         }
 
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };
 
     const applyV1 = () => {
-        if (!HEAD.querySelector(`link[href="${URLS.v1}"]`)) {
-            HEAD.appendChild(createLink(URLS.v1));
+        if (!getHead().querySelector(`link[href="${URLS.v1}"]`)) {
+            getHead().appendChild(createLink(URLS.v1));
         }
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };

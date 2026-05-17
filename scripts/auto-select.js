@@ -1,5 +1,6 @@
 (() => {
     let config = {
+        enabled: true,
         autoLecteurEnabled: false,
         lecteurPreferred: 'LECTEUR myTV',
         autoValiderEnabled: false
@@ -111,6 +112,7 @@
     const init = () => {
         chrome.storage.sync.get(config, (data) => {
             config = { ...config, ...data };
+            if (!config.enabled) return;
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', runAutoSelect);
             } else {

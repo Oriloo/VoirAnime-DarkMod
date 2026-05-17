@@ -16,9 +16,12 @@
         imageSizesObserver.observe(document.documentElement, { childList: true, subtree: true });
     };
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initImageSizes);
-    } else {
-        initImageSizes();
-    }
+    chrome.storage.sync.get({ enabled: true }, (data) => {
+        if (!data.enabled) return;
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initImageSizes);
+        } else {
+            initImageSizes();
+        }
+    });
 })();
