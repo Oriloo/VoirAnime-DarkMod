@@ -1,0 +1,108 @@
+.wp-manga-template-default .site-content .main-col-inner .characters-section {
+    margin-bottom: var(--spacing-xxl);
+
+    .characters-heading {
+        position: relative;
+
+        h2 {
+            font-size: var(--font-size-xxl);
+            text-align: center;
+            padding-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            border-bottom: var(--border-sm);
+            text-transform: uppercase;
+        }
+    }
+
+    .characters-loading,
+    .characters-empty {
+        text-align: center;
+        color: var(--color-secondary);
+        padding: var(--spacing-lg) 0;
+    }
+
+    .characters-grid {
+        display: grid;
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+        gap: var(--spacing-sm);
+
+        @media (max-width: 1200px) {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        @media (max-width: 576px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--spacing-sm);
+        }
+    }
+
+    .character-card {
+        position: relative;
+        display: block;
+        background-color: var(--color-zone-click);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        transition: var(--transition-fast);
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            background-color: var(--color-zone-hover);
+            transform: translateY(-2px);
+            color: inherit;
+        }
+
+        .card-face {
+            display: flex;
+            flex-direction: column;
+            transition: opacity var(--transition-fast);
+        }
+
+        .card-face-va {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        &.has-va:hover {
+            .card-face-character { opacity: 0; }
+            .card-face-va { opacity: 1; }
+        }
+
+        .character-image {
+            width: 100%;
+            aspect-ratio: var(--aspect-ratio-poster);
+            object-fit: cover;
+            background-color: var(--color-zone);
+        }
+
+        .character-info {
+            padding: var(--spacing-sm);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xxs);
+
+            .character-name {
+                font-size: var(--font-size-sm);
+                font-weight: var(--font-weight-bold);
+                color: var(--color-primary);
+                line-height: var(--line-height-sm);
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+            }
+
+            .character-role {
+                font-size: var(--font-size-xs);
+                color: var(--color-secondary);
+            }
+        }
+    }
+}
