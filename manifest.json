@@ -47,7 +47,8 @@
         "scripts/auto-select.js",
         "scripts/vf-vostfr-switch.js",
         "scripts/characters.js",
-        "scripts/scroll-to-watched.js"
+        "scripts/scroll-to-watched.js",
+        "scripts/fix-discord-icon.js"
       ],
       "run_at": "document_start"
     }
