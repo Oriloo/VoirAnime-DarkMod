@@ -3,7 +3,7 @@
 # VoirAnime DarkMod
 **Thème sombre et bien plus pour tout le site [VoirAnime](https://voir-anime.to/).**
 
-[![Version](https://img.shields.io/badge/version-v2.2.0-blue)]()
+[![Version](https://img.shields.io/badge/version-v2.2.1-blue)]()
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/dckaidelfhmapnkeejdihjbdbafckelh)](https://chromewebstore.google.com/detail/dckaidelfhmapnkeejdihjbdbafckelh)
 [![Firefox Add-ons](https://img.shields.io/amo/v/voiranime-darkmod)](https://addons.mozilla.org/firefox/addon/voiranime-darkmod/)
 <br>
@@ -89,7 +89,7 @@ Aussi disponible sur Android via l'aplication **Kiwi Browser** ou **Firefox**.
 
 ## 🤝 Contribuer
 
-Les contributions sont les bienvenues !
+Les contributions sont les bienvenues !
 
 1. Forkez le dépôt.
 2. Créez une branche depuis `dev` (`git checkout -b feat/ma-fonctionnalité dev`).
@@ -108,6 +108,6 @@ Ce projet est sous licence **GNU GPL v3**. Pour plus de détails, consultez [GPL
 ## 🙏 Remerciements
 
 * **[VoirAnime](https://voir-anime.to/)** pour son contenu.
-* **[Oriloo](https://github.com/Oriloo)** pour le développement initial.
+* **[pmharquet](https://github.com/pmharquet)** pour le développement initial.
 
-© 2023-2025 **Oriloo** — Projet non affilié à VoirAnime.
+© 2023-2026 **pmharquet** - Projet non affilié à VoirAnime.

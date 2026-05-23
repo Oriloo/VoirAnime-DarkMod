@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "VoirAnime - DarkMod : streaming animes",
   "description": "Thème sombre et plus encore, pour l'ensemble du site \"voir-anime.to\" (VA).",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "author": "Orilo",
   "icons": {
     "16": "icons/icon16.png",
@@ -42,18 +42,21 @@
     {
       "matches": ["*://*.voir-anime.to/*"],
       "js": [
+        "scripts/utils.js",
         "content.js",
         "scripts/remove-image-sizes.js",
         "scripts/auto-select.js",
         "scripts/vf-vostfr-switch.js",
         "scripts/characters.js",
-        "scripts/scroll-to-watched.js
+        "scripts/scroll-to-watched.js",
+        "scripts/fix-discord-icon.js"
       ],
       "run_at": "document_start"
     }
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
   "content_security_policy": {
     "extension_pages": "default-src 'self'; style-src 'self'; connect-src 'self' https://myanimelist.net https://api.nijihub.com;"
