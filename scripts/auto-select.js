@@ -1,18 +1,6 @@
 (() => {
     let config = {};
 
-    // Récupère la config broadcastée par content.js (via le dataset si déjà
-    // dispo, sinon attend l'event darkmod:ready).
-    const onConfig = (callback) => {
-        const root = document.documentElement;
-        const read = () => {
-            const raw = root.dataset.darkmodConfig;
-            if (!raw) return;
-            try { callback(JSON.parse(raw)); } catch {}
-        };
-        if (root.dataset.darkmodConfig) read();
-        else root.addEventListener('darkmod:ready', read, { once: true });
-    };
 
     const selectPreferredLecteur = (lecteurName) => {
         if (!config.autoLecteurEnabled) {
@@ -117,7 +105,7 @@
         }, 1000);
     };
 
-    onConfig((cfg) => {
+    window.onDarkmodConfig((cfg) => {
         config = cfg;
         if (!config.enabled) return;
         if (document.readyState === 'loading') {

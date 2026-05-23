@@ -162,18 +162,7 @@
         runOnAnimePage();
     };
 
-    const onConfig = (callback) => {
-        const root = document.documentElement;
-        const read = () => {
-            const raw = root.dataset.darkmodConfig;
-            if (!raw) return;
-            try { callback(JSON.parse(raw)); } catch {}
-        };
-        if (root.dataset.darkmodConfig) read();
-        else root.addEventListener('darkmod:ready', read, { once: true });
-    };
-
-    onConfig((config) => {
+    window.onDarkmodConfig((config) => {
         if (!config.enabled || config.version !== '2') return;
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
