@@ -1,6 +1,8 @@
 (() => {
     const CUSTOM_ATTR = 'data-custom-style';
-    const HEAD = document.head || document.documentElement;
+    // Récupère document.head dynamiquement car il peut être null au document_start.
+    // Fallback sur documentElement uniquement le temps que <head> soit parsé.
+    const getHead = () => document.head || document.documentElement;
 
     const URLS = {
         v2: {
@@ -47,54 +49,95 @@
 
     const injectV2Main = () => {
         URLS.v2.main.forEach(href => {
-            if (!HEAD.querySelector(`link[href="${href}"]`)) {
-                HEAD.appendChild(createLink(href));
+            if (!getHead().querySelector(`link[href="${href}"]`)) {
+                getHead().appendChild(createLink(href));
             }
         });
     };
 
-    injectV2Main();
-    HEAD.querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
-        if (!el.hasAttribute(CUSTOM_ATTR)) {
-            if (el.tagName === 'LINK') el.disabled = true;
-            else el.remove();
+    // Stratégie hybride suggérée par @ze-pharaon237 (#34) + complétée :
+    //  - <link>  : on bascule rel="stylesheet" → rel="alternate stylesheet"
+    //              (le browser réévalue, le sheet est parsé mais non appliqué).
+    //  - <style> : on bascule media → "not all" (le sheet n'est jamais appliqué).
+    // À la restauration, on remet la valeur d'origine. Plus de clone+replace
+    // nécessaire : changer rel/media force déjà la réévaluation côté browser.
+    const ORIGINAL_REL_ATTR = 'data-original-rel';
+    const ORIGINAL_MEDIA_ATTR = 'data-original-media';
+
+    const disableSheetEl = (el) => {
+        if (el.tagName === 'LINK') {
+            if (!el.hasAttribute(ORIGINAL_REL_ATTR)) {
+                el.setAttribute(ORIGINAL_REL_ATTR, el.getAttribute('rel') || 'stylesheet');
+            }
+            el.rel = 'alternate stylesheet';
+        } else if (el.tagName === 'STYLE') {
+            if (!el.hasAttribute(ORIGINAL_MEDIA_ATTR)) {
+                el.setAttribute(ORIGINAL_MEDIA_ATTR, el.getAttribute('media') || 'all');
+            }
+            el.media = 'not all';
         }
+    };
+
+    const enableSheetEl = (el) => {
+        if (el.tagName === 'LINK' && el.hasAttribute(ORIGINAL_REL_ATTR)) {
+            el.rel = el.getAttribute(ORIGINAL_REL_ATTR);
+            el.removeAttribute(ORIGINAL_REL_ATTR);
+        } else if (el.tagName === 'STYLE' && el.hasAttribute(ORIGINAL_MEDIA_ATTR)) {
+            el.media = el.getAttribute(ORIGINAL_MEDIA_ATTR);
+            el.removeAttribute(ORIGINAL_MEDIA_ATTR);
+        }
+    };
+
+    const observerV2 = new MutationObserver(records => {
+        records.forEach(rec => rec.addedNodes.forEach(n => {
+            if (n.nodeType !== 1) return;
+            if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) disableSheetEl(n);
+            else if (n.matches(`style:not([${CUSTOM_ATTR}])`)) disableSheetEl(n);
+        }));
     });
 
-    const applyV2 = () => {
-        HEAD.querySelectorAll(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
-            .forEach(el => el.tagName === 'LINK' ? el.disabled = true : el.remove());
+    const reenableDisabledOriginals = () => {
+        document.querySelectorAll(`[${ORIGINAL_REL_ATTR}], [${ORIGINAL_MEDIA_ATTR}]`).forEach(enableSheetEl);
+    };
 
-        if (URLS.listPattern.test(location.href) && !HEAD.querySelector(`link[href="${URLS.v2.list}"]`)) {
-            HEAD.appendChild(createLink(URLS.v2.list));
+    // Attache l'observer SYNCHRONOUSLY au document_start (avant tout async).
+    // Comme ça les <link>/<style> natifs ajoutés par le parser HTML sont
+    // désactivés à la volée et n'ont pas le temps de s'appliquer.
+    // On part du principe que v2 est actif (défaut). Si la config dit v1 ou
+    // disabled, on détache l'observer plus tard et on réactive les liens.
+    injectV2Main();
+    getHead().querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
+        if (!el.hasAttribute(CUSTOM_ATTR)) disableSheetEl(el);
+    });
+    // Observer documentElement (root) avec subtree: true pour couvrir
+    // <head> et tout son contenu, même créés après le doc_start.
+    observerV2.observe(document.documentElement, { childList: true, subtree: true });
+
+    const applyV2 = () => {
+        getHead().querySelectorAll(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}]), style:not([${CUSTOM_ATTR}])`)
+            .forEach(disableSheetEl);
+
+        if (URLS.listPattern.test(location.href) && !getHead().querySelector(`link[href="${URLS.v2.list}"]`)) {
+            getHead().appendChild(createLink(URLS.v2.list));
         }
 
-        const eh = HEAD.querySelector(`link[href="${URLS.v2.hide}"]`);
+        const eh = getHead().querySelector(`link[href="${URLS.v2.hide}"]`);
         if (eh) eh.remove();
-        if (config.search === 'cacher') HEAD.appendChild(createLink(URLS.v2.hide));
+        if (config.search === 'cacher') getHead().appendChild(createLink(URLS.v2.hide));
 
-        if (config.genre === 'show' && !HEAD.querySelector(`link[href="${URLS.v2.genre}"]`)) {
-            HEAD.appendChild(createLink(URLS.v2.genre));
+        if (config.genre === 'show' && !getHead().querySelector(`link[href="${URLS.v2.genre}"]`)) {
+            getHead().appendChild(createLink(URLS.v2.genre));
         }
 
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };
 
     const applyV1 = () => {
-        if (!HEAD.querySelector(`link[href="${URLS.v1}"]`)) {
-            HEAD.appendChild(createLink(URLS.v1));
+        if (!getHead().querySelector(`link[href="${URLS.v1}"]`)) {
+            getHead().appendChild(createLink(URLS.v1));
         }
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };
-
-    const observerV2 = new MutationObserver(records => {
-        records.forEach(rec => rec.addedNodes.forEach(n => {
-            if (n.nodeType === 1) {
-                if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) n.disabled = true;
-                else if (n.matches('style:not([data-custom-style])')) n.remove();
-            }
-        }));
-    });
 
     // Broadcast la config aux autres content scripts. Ils peuvent soit lire
     // le dataset directement (synchronously si la config est déjà broadcastée),
@@ -109,15 +152,18 @@
             config = data;
             broadcastConfig();
             if (!config.enabled) {
+                observerV2.disconnect();
                 removeInjected();
+                reenableDisabledOriginals();
                 return;
             }
 
             if (config.version === '2') {
                 applyV2();
-                observerV2.observe(HEAD, { childList: true, subtree: true });
             } else {
+                observerV2.disconnect();
                 removeInjected();
+                reenableDisabledOriginals();
                 applyV1();
             }
         });

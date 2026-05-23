@@ -1,7 +1,6 @@
 (() => {
     let config = {};
 
-
     const selectPreferredLecteur = (lecteurName) => {
         if (!config.autoLecteurEnabled) {
             console.log("[VoirAnime Auto] Auto-sélection du lecteur désactivée ⏸️");
