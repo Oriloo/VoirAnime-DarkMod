@@ -1,9 +1,17 @@
 (() => {
-    let config = {
-        enabled: true,
-        autoLecteurEnabled: false,
-        lecteurPreferred: 'LECTEUR myTV',
-        autoValiderEnabled: false
+    let config = {};
+
+    // Récupère la config broadcastée par content.js (via le dataset si déjà
+    // dispo, sinon attend l'event darkmod:ready).
+    const onConfig = (callback) => {
+        const root = document.documentElement;
+        const read = () => {
+            const raw = root.dataset.darkmodConfig;
+            if (!raw) return;
+            try { callback(JSON.parse(raw)); } catch {}
+        };
+        if (root.dataset.darkmodConfig) read();
+        else root.addEventListener('darkmod:ready', read, { once: true });
     };
 
     const selectPreferredLecteur = (lecteurName) => {
@@ -109,17 +117,13 @@
         }, 1000);
     };
 
-    const init = () => {
-        chrome.storage.sync.get(config, (data) => {
-            config = { ...config, ...data };
-            if (!config.enabled) return;
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', runAutoSelect);
-            } else {
-                runAutoSelect();
-            }
-        });
-    };
-
-    init();
+    onConfig((cfg) => {
+        config = cfg;
+        if (!config.enabled) return;
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runAutoSelect);
+        } else {
+            runAutoSelect();
+        }
+    });
 })();
