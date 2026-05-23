@@ -1,10 +1,5 @@
 (() => {
-    let config = {
-        enabled: true,
-        autoLecteurEnabled: false,
-        lecteurPreferred: 'LECTEUR myTV',
-        autoValiderEnabled: false
-    };
+    let config = {};
 
     const selectPreferredLecteur = (lecteurName) => {
         if (!config.autoLecteurEnabled) {
@@ -109,17 +104,13 @@
         }, 1000);
     };
 
-    const init = () => {
-        chrome.storage.sync.get(config, (data) => {
-            config = { ...config, ...data };
-            if (!config.enabled) return;
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', runAutoSelect);
-            } else {
-                runAutoSelect();
-            }
-        });
-    };
-
-    init();
+    window.onDarkmodConfig((cfg) => {
+        config = cfg;
+        if (!config.enabled) return;
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runAutoSelect);
+        } else {
+            runAutoSelect();
+        }
+    });
 })();

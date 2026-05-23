@@ -16,8 +16,8 @@
         imageSizesObserver.observe(document.documentElement, { childList: true, subtree: true });
     };
 
-    chrome.storage.sync.get({ enabled: true }, (data) => {
-        if (!data.enabled) return;
+    window.onDarkmodConfig((config) => {
+        if (!config.enabled || config.version !== '2') return;
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initImageSizes);
         } else {

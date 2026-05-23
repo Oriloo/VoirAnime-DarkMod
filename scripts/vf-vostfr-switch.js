@@ -105,16 +105,12 @@
         });
     };
 
-    const init = () => {
-        chrome.storage.sync.get({ enabled: true }, (data) => {
-            if (!data.enabled) return;
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', runVfVostfrSwitch);
-            } else {
-                runVfVostfrSwitch();
-            }
-        });
-    };
-
-    init();
+    window.onDarkmodConfig((config) => {
+        if (!config.enabled || config.version !== '2') return;
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', runVfVostfrSwitch);
+        } else {
+            runVfVostfrSwitch();
+        }
+    });
 })();

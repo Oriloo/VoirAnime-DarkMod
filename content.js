@@ -9,7 +9,7 @@
             main: [
                 'variables', 'general', 'main', 'header', 'footer',
                 'content', 'home', 'anime', 'episode', 'pagination',
-                'error404', 'recherche-av'
+                'error404', 'recherche-av', 'characters', 'scroll-to-watched'
             ].map(f => chrome.runtime.getURL(`versions/v200/${f}.css`)),
             list: chrome.runtime.getURL('versions/v200/liste.css'),
             hide: chrome.runtime.getURL('versions/v200/hide-search.css'),
@@ -19,13 +19,21 @@
         listPattern: /^https?:\/\/[^/]+\/liste-danimes\/.*$/
     };
 
-    let config = {
+    // Defaults centralisés. Toutes les clés de config sont ici pour qu'un seul
+    // appel `chrome.storage.sync.get(DEFAULTS, ...)` récupère tout, et que le
+    // résultat soit broadcasté aux autres scripts (cf. dispatch plus bas).
+    const DEFAULTS = {
         enabled: true,
         version: '2',
         theme: 'dark',
         search: 'fixe',
-        genre: 'hide'
+        genre: 'hide',
+        autoLecteurEnabled: false,
+        lecteurPreferred: 'LECTEUR myTV',
+        autoValiderEnabled: false
     };
+
+    let config = { ...DEFAULTS };
 
     const createLink = href => {
         const l = document.createElement('link');
@@ -131,9 +139,27 @@
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };
 
+    const observerV2 = new MutationObserver(records => {
+        records.forEach(rec => rec.addedNodes.forEach(n => {
+            if (n.nodeType === 1) {
+                if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) n.disabled = true;
+                else if (n.matches('style:not([data-custom-style])')) n.remove();
+            }
+        }));
+    });
+
+    // Broadcast la config aux autres content scripts. Ils peuvent soit lire
+    // le dataset directement (synchronously si la config est déjà broadcastée),
+    // soit attendre l'event `darkmod:ready` s'ils s'initialisent avant nous.
+    const broadcastConfig = () => {
+        document.documentElement.dataset.darkmodConfig = JSON.stringify(config);
+        document.documentElement.dispatchEvent(new Event('darkmod:ready'));
+    };
+
     function init() {
-        chrome.storage.sync.get(config, data => {
+        chrome.storage.sync.get(DEFAULTS, data => {
             config = data;
+            broadcastConfig();
             if (!config.enabled) {
                 observerV2.disconnect();
                 removeInjected();
@@ -152,7 +178,7 @@
         });
 
         chrome.storage.onChanged.addListener((changes, area) => {
-            if (area === 'sync' && ['enabled', 'version', 'theme', 'search', 'genre', 'autoLecteurEnabled', 'lecteurPreferred', 'autoValiderEnabled'].some(k => k in changes)) {
+            if (area === 'sync' && Object.keys(DEFAULTS).some(k => k in changes)) {
                 window.location.reload();
             }
         });
