@@ -139,15 +139,6 @@
         document.documentElement.classList.toggle('theme-light', config.theme === 'light');
     };
 
-    const observerV2 = new MutationObserver(records => {
-        records.forEach(rec => rec.addedNodes.forEach(n => {
-            if (n.nodeType === 1) {
-                if (n.matches(`link[rel=\"stylesheet\"]:not([${CUSTOM_ATTR}])`)) n.disabled = true;
-                else if (n.matches('style:not([data-custom-style])')) n.remove();
-            }
-        }));
-    });
-
     // Broadcast la config aux autres content scripts. Ils peuvent soit lire
     // le dataset directement (synchronously si la config est déjà broadcastée),
     // soit attendre l'event `darkmod:ready` s'ils s'initialisent avant nous.
