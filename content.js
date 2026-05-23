@@ -47,27 +47,37 @@
         });
     };
 
+    // Stratégie hybride suggérée par @ze-pharaon237 (#34) + complétée :
+    //  - <link>  : on bascule rel="stylesheet" → rel="alternate stylesheet"
+    //              (le browser réévalue, le sheet est parsé mais non appliqué).
+    //  - <style> : on bascule media → "not all" (le sheet n'est jamais appliqué).
+    // À la restauration, on remet la valeur d'origine. Plus de clone+replace
+    // nécessaire : changer rel/media force déjà la réévaluation côté browser.
+    const ORIGINAL_REL_ATTR = 'data-original-rel';
     const ORIGINAL_MEDIA_ATTR = 'data-original-media';
 
     const disableSheetEl = (el) => {
-        if (!el.hasAttribute(ORIGINAL_MEDIA_ATTR)) {
-            el.setAttribute(ORIGINAL_MEDIA_ATTR, el.getAttribute('media') || 'all');
+        if (el.tagName === 'LINK') {
+            if (!el.hasAttribute(ORIGINAL_REL_ATTR)) {
+                el.setAttribute(ORIGINAL_REL_ATTR, el.getAttribute('rel') || 'stylesheet');
+            }
+            el.rel = 'alternate stylesheet';
+        } else if (el.tagName === 'STYLE') {
+            if (!el.hasAttribute(ORIGINAL_MEDIA_ATTR)) {
+                el.setAttribute(ORIGINAL_MEDIA_ATTR, el.getAttribute('media') || 'all');
+            }
+            el.media = 'not all';
         }
-        if (el.tagName === 'LINK') el.disabled = true;
-        el.media = 'not all';
     };
 
-    // Pour ré-activer un sheet (link ou style), on le clone et on le remplace.
-    // Raison : Chrome a un bug où l'état "disabled" peut rester désynchronisé
-    // entre l'élément DOM et la CSSStyleSheet interne. Cloner force un état
-    // propre, garantissant la ré-application des styles.
     const enableSheetEl = (el) => {
-        const originalMedia = el.getAttribute(ORIGINAL_MEDIA_ATTR) || 'all';
-        const clone = el.cloneNode(true);
-        if (clone.tagName === 'LINK') clone.disabled = false;
-        clone.media = originalMedia;
-        clone.removeAttribute(ORIGINAL_MEDIA_ATTR);
-        el.replaceWith(clone);
+        if (el.tagName === 'LINK' && el.hasAttribute(ORIGINAL_REL_ATTR)) {
+            el.rel = el.getAttribute(ORIGINAL_REL_ATTR);
+            el.removeAttribute(ORIGINAL_REL_ATTR);
+        } else if (el.tagName === 'STYLE' && el.hasAttribute(ORIGINAL_MEDIA_ATTR)) {
+            el.media = el.getAttribute(ORIGINAL_MEDIA_ATTR);
+            el.removeAttribute(ORIGINAL_MEDIA_ATTR);
+        }
     };
 
     const observerV2 = new MutationObserver(records => {
@@ -79,11 +89,7 @@
     });
 
     const reenableDisabledOriginals = () => {
-        document.querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
-            if (!el.hasAttribute(CUSTOM_ATTR) && (el.disabled || el.media === 'not all' || el.hasAttribute(ORIGINAL_MEDIA_ATTR))) {
-                enableSheetEl(el);
-            }
-        });
+        document.querySelectorAll(`[${ORIGINAL_REL_ATTR}], [${ORIGINAL_MEDIA_ATTR}]`).forEach(enableSheetEl);
     };
 
     // Attache l'observer SYNCHRONOUSLY au document_start (avant tout async).
