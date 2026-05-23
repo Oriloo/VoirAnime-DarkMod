@@ -42,6 +42,7 @@
     {
       "matches": ["*://*.voir-anime.to/*"],
       "js": [
+        "scripts/utils.js",
         "content.js",
         "scripts/remove-image-sizes.js",
         "scripts/auto-select.js",
